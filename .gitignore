@@ -29,3 +29,7 @@ next-env.d.ts
 
 # local tooling
 .claude/
+
+# editor swap files
+*.swp
+*.swo

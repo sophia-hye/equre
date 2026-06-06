@@ -1,7 +1,7 @@
 # equre 웹사이트 기획안
 
 > The Next Generation Wellness Education
-> 주식회사 equre | 이큐어 인간발달연구소 (ETERNITY COMPANY)
+> 주식회사 equre | 이큐어 교육성장연구소 (ETERNITY COMPANY)
 
 문서 버전: v1.0 / 작성일: 2026-06-06
 출처: eqüre Final Pitch Deck 2026 (8p) 기반
@@ -15,7 +15,7 @@
 | 항목 | 내용 |
 |------|------|
 | 브랜드명 | equre (이큐어) |
-| 법인 | 주식회사 equre / 이큐어 인간발달연구소 (ETERNITY COMPANY) |
+| 법인 | 주식회사 equre / 이큐어 교육성장연구소 (ETERNITY COMPANY) |
 | 카테고리 | 차세대 웰니스 교육 (Wellness Education) |
 | 한 줄 정의 | 입시 컨설팅과 멘탈 케어를 혁신하는 글로벌 하이브리드 허브 |
 | 슬로건 | The Next Generation Wellness Education |
