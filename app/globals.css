@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+/* Fonts are loaded via <link> in app/layout.tsx
+   (Archivo, Inter, Caveat, Pretendard) */
+
+/* ── Design Tokens — Warm Cream / Terracotta infographic ──── */
+@theme {
+  /* Warm cream paper */
+  --color-bg: #eae5d8;
+  --color-bg-soft: #e3ddcd;
+  --color-surface: #f1ece0;
+  --color-line: #ccc3af;
+  --color-line-strong: #29251f;
+
+  /* Warm ink */
+  --color-ink: #272219;
+  --color-muted: #6e675a;
+  --color-faint: #a79d88;
+
+  /* Single terracotta accent */
+  --color-accent: #c2492b;
+  --color-accent-dim: #9c3a20;
+  --color-alert: #c2492b;
+
+  --font-display: "Archivo", "Pretendard", system-ui, sans-serif;
+  --font-sans: "Inter", "Pretendard", system-ui, -apple-system, sans-serif;
+  --font-hand: "Caveat", "Pretendard", cursive;
+
+  --radius: 2px;
+  --radius-sm: 2px;
+}
+
+/* ── Base ────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+/* paper grain (multiply) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* lift page content above the grain — scoped to layout elements only,
+   so portaled overlays (e.g. mobile menu) keep their own positioning */
+body > header,
+body > main,
+body > footer {
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Typography helpers ──────────────────────────────────── */
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* uppercase tracked label */
+.label {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* handwritten annotation (terracotta) */
+.hand {
+  font-family: var(--font-hand);
+  color: var(--color-accent);
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+/* big light index numbers */
+.index-num {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--color-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Reveal animation ────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* link underline grow */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 0.3s ease;
+}
+.link-underline:hover {
+  background-size: 100% 1px;
+}
+
+/* draw-in animation for the journey path */
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.path-draw {
+  stroke-dasharray: 2200;
+  stroke-dashoffset: 2200;
+}
+.path-draw.is-drawn {
+  animation: draw 2.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* longer variant for the untangle path (dense knot needs a long dash) */
+.path-draw-long {
+  stroke-dasharray: 7000;
+  stroke-dashoffset: 7000;
+}
+.path-draw-long.is-drawn {
+  animation: draw 3.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .path-draw,
+  .path-draw-long {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+}
