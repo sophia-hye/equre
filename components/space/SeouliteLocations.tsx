@@ -13,7 +13,7 @@ type Location = {
 const locations: Location[] = [
   {
     name: "CARROT",
-    image: "/space/carrot.jpg",
+    image: "/space/carrot.png",
     address: "서울 용산구 한남동 이태원로 268-20",
     href: "https://www.carrotglobal.com/",
     description:
@@ -21,7 +21,7 @@ const locations: Location[] = [
   },
   {
     name: "사:유",
-    image: "/space/sayu.jpg",
+    image: "/space/sayu.png",
     address: "서울 용산구 신흥로 11, 해방촌",
     href: "https://centerone.kr/",
     description:
