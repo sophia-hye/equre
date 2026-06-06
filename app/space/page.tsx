@@ -5,6 +5,7 @@ import { SectionTitle } from "@/components/ui/SectionTitle";
 import { Reveal } from "@/components/ui/Reveal";
 import { CTASection } from "@/components/ui/CTASection";
 import { IconGlass, IconDevice } from "@/components/ui/icons";
+import { SeouliteLocations } from "@/components/space/SeouliteLocations";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -113,8 +114,8 @@ export default function SpacePage() {
             />
           </Reveal>
           <Reveal delay={150}>
-            <div className="mt-12 flex h-[280px] items-center justify-center border border-line-strong bg-surface label text-faint">
-              MAP — 위치 정보 확정 후 연동
+            <div className="mt-14">
+              <SeouliteLocations />
             </div>
           </Reveal>
         </Container>
