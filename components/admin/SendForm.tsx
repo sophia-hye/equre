@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { validateEmail } from "@/components/auth/authStyles";
+import { useMessages } from "@/components/i18n/LocaleProvider";
 
 type Props = {
   applicationId: string;
@@ -12,6 +13,7 @@ type Props = {
 
 export function SendForm({ applicationId, defaultEmail, alreadySentTo }: Props) {
   const router = useRouter();
+  const t = useMessages().admin;
   const [email, setEmail] = useState(defaultEmail ?? "");
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
@@ -22,10 +24,10 @@ export function SendForm({ applicationId, defaultEmail, alreadySentTo }: Props) 
     setError("");
     setMsg("");
     if (!validateEmail(email)) {
-      setError("올바른 이메일을 입력해 주세요.");
+      setError(t.errEmail);
       return;
     }
-    if (!confirm(`${email} 으로 지원서 내용을 발송할까요?`)) return;
+    if (!confirm(t.confirmSend.replace("{email}", email))) return;
 
     setBusy(true);
     const res = await fetch(`/api/admin/applications/${applicationId}/send`, {
@@ -36,21 +38,21 @@ export function SendForm({ applicationId, defaultEmail, alreadySentTo }: Props) 
     setBusy(false);
     const j = await res.json().catch(() => ({}));
     if (!res.ok) {
-      setError(j.error ?? "발송에 실패했습니다.");
+      setError(j.error ?? t.errSend);
       return;
     }
-    setMsg(`${email} 으로 발송되었습니다.`);
+    setMsg(t.sendDone.replace("{email}", email));
     router.refresh();
   }
 
   return (
     <div className="border border-line-strong bg-bg-soft p-6">
       <h3 className="font-display text-lg font-bold tracking-tight">
-        이메일로 발송
+        {t.sendTitle}
       </h3>
       {alreadySentTo && (
         <p className="mt-2 text-xs text-muted">
-          이전 발송: {alreadySentTo}
+          {t.prevSend.replace("{email}", alreadySentTo)}
         </p>
       )}
       <form onSubmit={handleSubmit} className="mt-4 flex flex-wrap gap-3">
@@ -58,7 +60,7 @@ export function SendForm({ applicationId, defaultEmail, alreadySentTo }: Props) 
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="수신 이메일 주소"
+          placeholder={t.sendPlaceholder}
           className="min-w-[260px] flex-1 border border-line bg-surface px-4 py-2.5 text-sm text-ink outline-none focus:border-accent"
         />
         <button
@@ -66,7 +68,7 @@ export function SendForm({ applicationId, defaultEmail, alreadySentTo }: Props) 
           disabled={busy}
           className="bg-accent px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-dim disabled:opacity-50"
         >
-          {busy ? "발송 중…" : "보내기"}
+          {busy ? t.sending : t.sendBtn}
         </button>
       </form>
       {error && <p className="mt-3 text-sm text-alert">{error}</p>}
