@@ -61,7 +61,7 @@ export function UntanglePath() {
       fill="none"
       className="w-full"
       role="img"
-      aria-label="엉킨 길이 점차 풀려 깔끔한 길로 이어지는 곡선"
+      aria-label="막막한 시작에서 안정된 현지 정착으로 이어지는 곡선"
     >
       <path
         d={d}

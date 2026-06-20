@@ -5,7 +5,7 @@ export const site = {
   tagline: "The Next Generation Wellness Education",
   description:
     "경쟁과 압박에 내몰린 엘리트 청소년들을 위한 완벽한 플랜 B. 입시 컨설팅과 멘탈 케어를 혁신하는 글로벌 하이브리드 허브.",
-  email: "hello@equre.com",
+  email: "hello@equre.us",
   location: "SEOULITE HANNAM",
 } as const;
 
