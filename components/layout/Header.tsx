@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
-import { LanguageToggle } from "@/components/ui/LanguageToggle";
+// import { LanguageToggle } from "@/components/ui/LanguageToggle"; // 임시: 한국어 검수 전까지 영어 고정
 import { MobileMenu } from "./MobileMenu";
 import { AuthNav } from "./AuthNav";
 import { getMessages } from "@/lib/i18n/server";
@@ -13,7 +13,7 @@ export async function Header() {
         <Logo />
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <LanguageToggle />
+          {/* <LanguageToggle /> 임시: 한국어 검수 전까지 영어 고정 */}
           <AuthNav />
           <Link
             href="/contact"
