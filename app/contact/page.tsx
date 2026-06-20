@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 import { ContactForm } from "@/components/contact/ContactForm";
-import { site } from "@/lib/site";
+import { site, getSocialLinks } from "@/lib/site";
+import { IconInstagram, IconKakao } from "@/components/ui/icons";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -41,6 +42,29 @@ export default function ContactPage() {
                   </div>
                 ))}
               </dl>
+
+              {/* 메신저 바로 문의 */}
+              <p className="label mt-10 text-faint">바로 문의</p>
+              <div className="mt-4 flex flex-col gap-3">
+                {getSocialLinks().map((s) => (
+                  <a
+                    key={s.type}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-3 border border-line-strong px-4 py-3 text-sm font-medium text-ink transition-colors hover:bg-ink hover:text-bg"
+                  >
+                    {s.type === "instagram" ? (
+                      <IconInstagram width={18} height={18} />
+                    ) : (
+                      <IconKakao width={18} height={18} />
+                    )}
+                    {s.type === "instagram"
+                      ? "인스타그램 DM 보내기"
+                      : "카카오톡으로 문의"}
+                  </a>
+                ))}
+              </div>
             </div>
 
             {/* Form */}

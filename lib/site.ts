@@ -9,6 +9,36 @@ export const site = {
   location: "SEOULITE HANNAM",
 } as const;
 
+/** 소셜 / 메신저 채널 설정.
+ *  카카오 채널이 생기면 kakaoChannelId 에 "_xxxxx" (pf.kakao.com/_xxxxx 의 뒷부분)만
+ *  넣으면 모든 곳(푸터/플로팅/Contact)에 카카오 버튼이 자동으로 나타납니다. */
+export const social = {
+  instagramHandle: "equre.us",
+  instagramUrl: "https://instagram.com/equre.us",
+  instagramDm: "https://ig.me/m/equre.us",
+  kakaoChannelId: "", // 예: "_abcDEF"
+} as const;
+
+export type SocialLink = {
+  type: "instagram" | "kakao";
+  label: string;
+  href: string;
+};
+
+export function getSocialLinks(): SocialLink[] {
+  const links: SocialLink[] = [
+    { type: "instagram", label: "Instagram DM", href: social.instagramDm },
+  ];
+  if (social.kakaoChannelId) {
+    links.push({
+      type: "kakao",
+      label: "KakaoTalk 채널",
+      href: `https://pf.kakao.com/${social.kakaoChannelId}/chat`,
+    });
+  }
+  return links;
+}
+
 export type NavChild = { label: string; href: string; desc?: string };
 export type NavItem = { label: string; href?: string; children?: NavChild[] };
 

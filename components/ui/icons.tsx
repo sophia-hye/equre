@@ -100,6 +100,30 @@ export function IconArrowRight(props: IconProps) {
   );
 }
 
+export function IconInstagram(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17" cy="7" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function IconKakao(props: IconProps) {
+  return (
+    <svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      {...props}
+    >
+      <path d="M12 4C6.7 4 2.4 7.4 2.4 11.5c0 2.6 1.8 4.9 4.4 6.2-.2.6-.7 2.4-.8 2.8 0 .2.1.4.4.2.3-.2 2.7-1.8 3.7-2.5.5.1 1 .1 1.5.1 5.3 0 9.6-3.4 9.6-7.5S17.3 4 12 4z" />
+    </svg>
+  );
+}
+
 export function IconShield(props: IconProps) {
   return (
     <svg {...base} {...props}>
