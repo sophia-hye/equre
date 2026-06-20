@@ -153,7 +153,7 @@ export function SignupForm() {
           환영합니다, {form.name}님!
         </h3>
         <p className="mt-3 text-sm leading-relaxed text-muted">
-          이제 <strong className="text-ink">equre의 전체 콘텐츠</strong>를 보실 수
+          이제 <strong className="text-ink">eqüre의 전체 콘텐츠</strong>를 보실 수
           있어요. 마이페이지에서 회원 상태를 확인할 수 있습니다.
         </p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
@@ -327,7 +327,7 @@ export function SignupForm() {
         </div>
         <div className="mt-6">
           <p className="label mb-3 text-muted">
-            equre에서 무엇을 찾고 있나요? (복수 선택)
+            eqüre에서 무엇을 찾고 있나요? (복수 선택)
           </p>
           <div className="flex flex-wrap gap-2">
             {INTERESTS.map((item) => {

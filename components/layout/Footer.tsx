@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { site } from "@/lib/site";
+import { site, getSocialLinks } from "@/lib/site";
 import { Container } from "@/components/ui/Container";
 
 const columns = [
@@ -59,6 +59,19 @@ export function Footer() {
                     </Link>
                   </li>
                 ))}
+                {col.title === "Connect" &&
+                  getSocialLinks().map((s) => (
+                    <li key={s.type}>
+                      <a
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="link-underline text-sm text-muted transition-colors hover:text-ink"
+                      >
+                        {s.type === "instagram" ? "Instagram" : "KakaoTalk"}
+                      </a>
+                    </li>
+                  ))}
               </ul>
             </div>
           ))}
