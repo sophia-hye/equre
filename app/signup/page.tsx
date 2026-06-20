@@ -9,7 +9,7 @@ export default function SignupPage() {
   return (
     <section className="border-b border-line-strong py-20 md:py-28">
       <Container>
-        <div className="mx-auto max-w-md">
+        <div className="mx-auto max-w-3xl">
           <p className="font-display text-2xl font-semibold tracking-tight text-accent">
             ( eq&uuml;re )
           </p>
@@ -19,7 +19,7 @@ export default function SignupPage() {
           <p className="mt-3 text-sm text-muted">
             플랜 B의 첫 걸음을 함께 시작해요.
           </p>
-          <div className="mt-10 border border-line bg-bg-soft p-6 md:p-8">
+          <div className="mt-10 border border-line bg-bg-soft p-6 md:p-10">
             <SignupForm />
           </div>
         </div>
