@@ -4,14 +4,34 @@
 -- (모든 테이블은 equre_ 접두어 사용)
 -- ============================================================
 
--- 1) 프로필 테이블 (auth.users 1:1, 역할/이름 보관)
+-- 1) 프로필 테이블 (auth.users 1:1, 역할 + 회원가입 수집 정보)
 create table if not exists public.equre_profiles (
   id uuid primary key references auth.users (id) on delete cascade,
   email text,
   name text,
   role text not null default 'user' check (role in ('user', 'admin')),
+  phone text,
+  user_type text,
+  age_group text,
+  gender text,
+  region text,
+  language text,
+  interests jsonb not null default '[]'::jsonb,
+  referral text,
+  marketing_consent boolean not null default false,
   created_at timestamptz not null default now()
 );
+
+-- 기존 설치 대상 마이그레이션 (컬럼 없으면 추가)
+alter table public.equre_profiles add column if not exists phone text;
+alter table public.equre_profiles add column if not exists user_type text;
+alter table public.equre_profiles add column if not exists age_group text;
+alter table public.equre_profiles add column if not exists gender text;
+alter table public.equre_profiles add column if not exists region text;
+alter table public.equre_profiles add column if not exists language text;
+alter table public.equre_profiles add column if not exists interests jsonb not null default '[]'::jsonb;
+alter table public.equre_profiles add column if not exists referral text;
+alter table public.equre_profiles add column if not exists marketing_consent boolean not null default false;
 
 alter table public.equre_profiles enable row level security;
 
@@ -34,11 +54,23 @@ security definer
 set search_path = public
 as $$
 begin
-  insert into public.equre_profiles (id, email, name)
+  insert into public.equre_profiles (
+    id, email, name, phone, user_type, age_group, gender,
+    region, language, interests, referral, marketing_consent
+  )
   values (
     new.id,
     new.email,
-    coalesce(new.raw_user_meta_data ->> 'name', '')
+    coalesce(new.raw_user_meta_data ->> 'name', ''),
+    new.raw_user_meta_data ->> 'phone',
+    new.raw_user_meta_data ->> 'user_type',
+    new.raw_user_meta_data ->> 'age_group',
+    new.raw_user_meta_data ->> 'gender',
+    new.raw_user_meta_data ->> 'region',
+    new.raw_user_meta_data ->> 'language',
+    coalesce(new.raw_user_meta_data -> 'interests', '[]'::jsonb),
+    new.raw_user_meta_data ->> 'referral',
+    coalesce((new.raw_user_meta_data ->> 'marketing_consent')::boolean, false)
   );
   return new;
 end;

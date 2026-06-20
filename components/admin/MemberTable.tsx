@@ -1,9 +1,10 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import Link from "next/link";
 import type { Profile } from "@/lib/auth/session";
+import { AGE_GROUPS, INTERESTS, USER_TYPES } from "@/lib/profile/options";
 
 export type MemberApp = {
   id: string;
@@ -23,11 +24,30 @@ const APP_LABEL: Record<MemberApp["status"], string> = {
   sent: "발송 완료",
 };
 
+const selectClass =
+  "border border-line bg-surface px-3 py-2 text-sm text-ink outline-none focus:border-accent";
+
 export function MemberTable({ initialMembers, currentUserId }: Props) {
   const router = useRouter();
   const [members, setMembers] = useState<Member[]>(initialMembers);
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState("");
+
+  // filters
+  const [fType, setFType] = useState("");
+  const [fAge, setFAge] = useState("");
+  const [fInterest, setFInterest] = useState("");
+
+  const filtered = useMemo(
+    () =>
+      members.filter((m) => {
+        if (fType && m.user_type !== fType) return false;
+        if (fAge && m.age_group !== fAge) return false;
+        if (fInterest && !(m.interests ?? []).includes(fInterest)) return false;
+        return true;
+      }),
+    [members, fType, fAge, fInterest]
+  );
 
   async function toggleRole(m: Member) {
     const nextRole = m.role === "admin" ? "user" : "admin";
@@ -80,24 +100,74 @@ export function MemberTable({ initialMembers, currentUserId }: Props) {
     router.refresh();
   }
 
+  function resetFilters() {
+    setFType("");
+    setFAge("");
+    setFInterest("");
+  }
+
   return (
     <div>
+      {/* filter bar */}
+      <div className="mb-6 flex flex-wrap items-center gap-3">
+        <span className="label text-faint">필터</span>
+        <select value={fType} onChange={(e) => setFType(e.target.value)} className={selectClass}>
+          <option value="">유형 전체</option>
+          {USER_TYPES.map((o) => (
+            <option key={o}>{o}</option>
+          ))}
+        </select>
+        <select value={fAge} onChange={(e) => setFAge(e.target.value)} className={selectClass}>
+          <option value="">연령대 전체</option>
+          {AGE_GROUPS.map((o) => (
+            <option key={o}>{o}</option>
+          ))}
+        </select>
+        <select
+          value={fInterest}
+          onChange={(e) => setFInterest(e.target.value)}
+          className={selectClass}
+        >
+          <option value="">관심사 전체</option>
+          {INTERESTS.map((o) => (
+            <option key={o}>{o}</option>
+          ))}
+        </select>
+        {(fType || fAge || fInterest) && (
+          <button
+            type="button"
+            onClick={resetFilters}
+            className="text-sm font-medium text-accent"
+          >
+            초기화
+          </button>
+        )}
+        <span className="ml-auto text-sm text-muted">
+          {filtered.length} / {members.length}명
+        </span>
+      </div>
+
       {error && <p className="mb-4 text-sm text-alert">{error}</p>}
 
       <div className="overflow-x-auto border border-line-strong">
-        <table className="w-full min-w-[820px] text-left text-sm">
+        <table className="w-full min-w-[1080px] text-left text-sm">
           <thead>
             <tr className="border-b border-line-strong">
-              <th className="label px-4 py-3 text-muted">이름</th>
-              <th className="label px-4 py-3 text-muted">이메일</th>
-              <th className="label px-4 py-3 text-muted">역할</th>
-              <th className="label px-4 py-3 text-muted">지원서</th>
-              <th className="label px-4 py-3 text-right text-muted">관리</th>
+              {["이름", "이메일", "유형", "연령대", "지역", "관심사", "역할", "지원서", "관리"].map(
+                (h, i) => (
+                  <th
+                    key={h}
+                    className={`label px-4 py-3 text-muted ${i === 8 ? "text-right" : ""}`}
+                  >
+                    {h}
+                  </th>
+                )
+              )}
             </tr>
           </thead>
           <tbody>
-            {members.map((m) => (
-              <tr key={m.id} className="border-b border-line last:border-0">
+            {filtered.map((m) => (
+              <tr key={m.id} className="border-b border-line align-top last:border-0">
                 <td className="px-4 py-3 font-medium text-ink">
                   {m.name || "—"}
                   {m.id === currentUserId && (
@@ -105,6 +175,25 @@ export function MemberTable({ initialMembers, currentUserId }: Props) {
                   )}
                 </td>
                 <td className="px-4 py-3 text-muted">{m.email}</td>
+                <td className="px-4 py-3 text-muted">{m.user_type || "—"}</td>
+                <td className="px-4 py-3 text-muted">{m.age_group || "—"}</td>
+                <td className="px-4 py-3 text-muted">{m.region || "—"}</td>
+                <td className="px-4 py-3">
+                  <div className="flex max-w-[220px] flex-wrap gap-1">
+                    {(m.interests ?? []).length > 0 ? (
+                      (m.interests ?? []).map((it) => (
+                        <span
+                          key={it}
+                          className="border border-line px-1.5 py-0.5 text-[0.65rem] text-muted"
+                        >
+                          {it}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="text-muted">—</span>
+                    )}
+                  </div>
+                </td>
                 <td className="px-4 py-3">
                   <span
                     className={
@@ -129,7 +218,7 @@ export function MemberTable({ initialMembers, currentUserId }: Props) {
                       type="button"
                       disabled={busy === m.id}
                       onClick={() => requestApplication(m)}
-                      className="border border-line px-3 py-1.5 text-xs font-medium text-ink transition-colors hover:border-accent hover:text-accent disabled:opacity-50"
+                      className="whitespace-nowrap border border-line px-2.5 py-1.5 text-xs font-medium text-ink transition-colors hover:border-accent hover:text-accent disabled:opacity-50"
                     >
                       지원서 요청
                     </button>
@@ -141,7 +230,7 @@ export function MemberTable({ initialMembers, currentUserId }: Props) {
                       type="button"
                       disabled={busy === m.id}
                       onClick={() => toggleRole(m)}
-                      className="border border-line px-3 py-1.5 text-xs font-medium text-ink transition-colors hover:border-accent hover:text-accent disabled:opacity-50"
+                      className="whitespace-nowrap border border-line px-2.5 py-1.5 text-xs font-medium text-ink transition-colors hover:border-accent hover:text-accent disabled:opacity-50"
                     >
                       {m.role === "admin" ? "관리자 해제" : "관리자 지정"}
                     </button>
@@ -149,7 +238,7 @@ export function MemberTable({ initialMembers, currentUserId }: Props) {
                       type="button"
                       disabled={busy === m.id || m.id === currentUserId}
                       onClick={() => remove(m)}
-                      className="border border-line px-3 py-1.5 text-xs font-medium text-alert transition-colors hover:bg-alert hover:text-white disabled:opacity-30"
+                      className="border border-line px-2.5 py-1.5 text-xs font-medium text-alert transition-colors hover:bg-alert hover:text-white disabled:opacity-30"
                     >
                       삭제
                     </button>
@@ -157,10 +246,10 @@ export function MemberTable({ initialMembers, currentUserId }: Props) {
                 </td>
               </tr>
             ))}
-            {members.length === 0 && (
+            {filtered.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-10 text-center text-muted">
-                  회원이 없습니다.
+                <td colSpan={9} className="px-4 py-10 text-center text-muted">
+                  조건에 맞는 회원이 없습니다.
                 </td>
               </tr>
             )}

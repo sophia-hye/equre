@@ -57,6 +57,46 @@ export default async function MyPage() {
       />
       <section className="py-12 md:py-16">
         <Container>
+          {/* 회원 상태 카드 */}
+          <div className="mb-12 border border-line-strong bg-bg-soft p-6 md:p-8">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="bg-accent px-3 py-1 text-xs font-semibold text-white">
+                회원
+              </span>
+              {session.profile?.role === "admin" && (
+                <span className="border border-line-strong px-3 py-1 text-xs font-semibold text-ink">
+                  관리자
+                </span>
+              )}
+              <span className="font-display text-lg font-bold tracking-tight">
+                {session.profile?.name || "회원"}님 · 가입 완료
+              </span>
+            </div>
+            <p className="mt-3 text-sm text-muted">
+              equre의 전체 콘텐츠를 이용하실 수 있는 회원 상태입니다.
+            </p>
+            <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line pt-6 sm:grid-cols-3">
+              {[
+                { k: "이메일", v: session.email },
+                { k: "사용자 유형", v: session.profile?.user_type },
+                { k: "연령대", v: session.profile?.age_group },
+                { k: "거주 지역", v: session.profile?.region },
+                { k: "선호 언어", v: session.profile?.language },
+                {
+                  k: "관심사",
+                  v: session.profile?.interests?.length
+                    ? session.profile.interests.join(", ")
+                    : null,
+                },
+              ].map((row) => (
+                <div key={row.k}>
+                  <dt className="label text-faint">{row.k}</dt>
+                  <dd className="mt-1 text-sm text-ink">{row.v || "—"}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
           {apps.length === 0 && (
             <div className="border border-line bg-bg-soft p-10 text-center">
               <p className="font-display text-lg font-semibold">

@@ -8,6 +8,15 @@ export type Profile = {
   email: string | null;
   name: string | null;
   role: "admin" | "user";
+  phone: string | null;
+  user_type: string | null;
+  age_group: string | null;
+  gender: string | null;
+  region: string | null;
+  language: string | null;
+  interests: string[] | null;
+  referral: string | null;
+  marketing_consent: boolean | null;
   created_at: string;
 };
 

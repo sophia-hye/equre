@@ -5,6 +5,7 @@ import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ProcessSteps } from "@/components/ui/ProcessSteps";
 import { Reveal } from "@/components/ui/Reveal";
 import { CTASection } from "@/components/ui/CTASection";
+import { MemberGate } from "@/components/MemberGate";
 import { IconRoute, IconPulseHeart } from "@/components/ui/icons";
 
 export const metadata: Metadata = {
@@ -87,22 +88,20 @@ export default function ProgramsPage() {
         </Container>
       </section>
 
-      {/* Peer Mentoring */}
+      {/* Peer Mentoring (members only) */}
       <section className="bg-bg-soft py-24 md:py-28">
         <Container>
-          <Reveal>
+          <MemberGate>
             <SectionTitle
               kicker="Peer Mentoring"
               index="02"
               title="글로벌 피어 멘토"
               description="회복과 진학에 성공한 선배가 후배를 직접 이끄는 멘토로 성장합니다. 치유와 성장의 선순환을 완성합니다."
             />
-          </Reveal>
-          <Reveal delay={150}>
             <div className="mt-16">
               <ProcessSteps steps={mentorSteps} />
             </div>
-          </Reveal>
+          </MemberGate>
         </Container>
       </section>
 
