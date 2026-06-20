@@ -1,40 +1,44 @@
 import Link from "next/link";
 import { site, getSocialLinks } from "@/lib/site";
 import { Container } from "@/components/ui/Container";
+import { getMessages } from "@/lib/i18n/server";
 
-const columns = [
-  {
-    title: "Programs",
-    links: [
-      { label: "입시 & 멘탈", href: "/programs" },
-      { label: "피어 멘토링", href: "/programs" },
-    ],
-  },
-  {
-    title: "Space",
-    links: [
-      { label: "Sober Bar", href: "/space" },
-      { label: "Tech Showroom", href: "/space" },
-      { label: "SEOULITE HANNAM", href: "/space" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About", href: "/about" },
-      { label: "Brand Identity", href: "/about" },
-    ],
-  },
-  {
-    title: "Connect",
-    links: [
-      { label: "상담 신청", href: "/contact" },
-      { label: "B2B 문의", href: "/contact" },
-    ],
-  },
-];
+export async function Footer() {
+  const msgs = await getMessages();
+  const m = msgs.footer;
 
-export function Footer() {
+  const columns = [
+    {
+      title: "Programs",
+      links: [
+        { label: m.linkAdmissions, href: "/programs" },
+        { label: m.linkPeer, href: "/programs" },
+      ],
+    },
+    {
+      title: "Space",
+      links: [
+        { label: "Sober Bar", href: "/space" },
+        { label: "Tech Showroom", href: "/space" },
+        { label: "SEOULITE HANNAM", href: "/space" },
+      ],
+    },
+    {
+      title: m.colCompany,
+      links: [
+        { label: "About", href: "/about" },
+        { label: "Brand Identity", href: "/about" },
+      ],
+    },
+    {
+      title: m.colConnect,
+      links: [
+        { label: msgs.common.consult, href: "/contact" },
+        { label: m.b2bInquiry, href: "/contact" },
+      ],
+    },
+  ];
+
   return (
     <footer className="border-t border-line-strong bg-bg">
       <Container>
@@ -42,7 +46,7 @@ export function Footer() {
           <div>
             <p className="label text-ink">The Next Generation</p>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
-              {site.tagline}
+              {m.tagline}
             </p>
           </div>
           {columns.map((col) => (
@@ -59,7 +63,7 @@ export function Footer() {
                     </Link>
                   </li>
                 ))}
-                {col.title === "Connect" &&
+                {col.title === m.colConnect &&
                   getSocialLinks().map((s) => (
                     <li key={s.type}>
                       <a
@@ -85,11 +89,11 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col gap-3 border-t border-line py-7 text-xs text-faint md:flex-row md:items-center md:justify-between">
-          <p>{site.legalNameFull}</p>
+          <p>{m.legal}</p>
           <p className="flex items-center gap-3">
-            <span>개인정보처리방침</span>
+            <span>{m.privacy}</span>
             <span className="text-line">·</span>
-            <span>이용약관</span>
+            <span>{m.terms}</span>
             <span className="text-line">·</span>
             <span>&copy; 2026 {site.name}</span>
           </p>

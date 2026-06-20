@@ -25,6 +25,10 @@ export const messages = {
       colConnect: "Connect",
       privacy: "개인정보처리방침",
       terms: "이용약관",
+      linkAdmissions: "입시 & 멘탈",
+      linkPeer: "피어 멘토링",
+      b2bInquiry: "B2B 문의",
+      legal: "주식회사 equre | 이큐어 교육성장연구소 (ETERNITY COMPANY)",
     },
     hero: {
       tag: "( eqüre )",
@@ -231,6 +235,10 @@ export const messages = {
       colConnect: "Connect",
       privacy: "Privacy Policy",
       terms: "Terms of Use",
+      linkAdmissions: "Admissions & Mental",
+      linkPeer: "Peer Mentoring",
+      b2bInquiry: "B2B Inquiry",
+      legal: "equre Inc. | equre Institute for Education & Growth (ETERNITY COMPANY)",
     },
     hero: {
       tag: "( eqüre )",
