@@ -33,3 +33,7 @@ next-env.d.ts
 # editor swap files
 *.swp
 *.swo
+
+# bkit auto-generated state
+docs/.bkit-memory.json
+docs/.pdca-status.json
