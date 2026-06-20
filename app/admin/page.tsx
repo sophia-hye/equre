@@ -35,7 +35,9 @@ export default async function AdminPage() {
   const admin = createAdminClient();
   const { data } = await admin
     .from("equre_profiles")
-    .select("id, email, name, role, created_at")
+    .select(
+      "id, email, name, role, phone, user_type, age_group, gender, region, language, interests, referral, marketing_consent, created_at"
+    )
     .order("created_at", { ascending: false });
 
   const profiles = (data ?? []) as Profile[];
