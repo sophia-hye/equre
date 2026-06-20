@@ -8,6 +8,8 @@ import { supabaseConfigured } from "@/lib/supabase/env";
 import { authInput, authLabel, validateEmail } from "./authStyles";
 import {
   AGE_GROUPS,
+  CONTACT_PLACEHOLDER,
+  CONTACT_TYPES,
   GENDERS,
   INTERESTS,
   LANGUAGES,
@@ -18,7 +20,8 @@ import {
 
 type Form = {
   name: string;
-  phone: string;
+  contact_type: string;
+  contact_value: string;
   email: string;
   password: string;
   user_type: string;
@@ -34,7 +37,8 @@ type Form = {
 
 const EMPTY: Form = {
   name: "",
-  phone: "",
+  contact_type: "휴대폰",
+  contact_value: "",
   email: "",
   password: "",
   user_type: "",
@@ -119,7 +123,8 @@ export function SignupForm() {
       options: {
         data: {
           name: form.name.trim(),
-          phone: form.phone.trim(),
+          contact_type: form.contact_type,
+          contact_value: form.contact_value.trim(),
           user_type: form.user_type,
           age_group: form.age_group,
           gender: form.gender,
@@ -231,12 +236,20 @@ export function SignupForm() {
               onChange={(e) => set("name", e.target.value)}
             />
           </Field>
-          <Field label="휴대폰 PHONE (선택)" half>
+          <Field label="연락 수단 CONTACT" half>
+            <Select
+              value={form.contact_type}
+              onChange={(v) => set("contact_type", v)}
+              options={CONTACT_TYPES}
+              placeholder="휴대폰"
+            />
+          </Field>
+          <Field label="연락처 (선택) — 휴대폰이 없으면 인스타/카카오 ID 등">
             <input
               className={authInput}
-              placeholder="010-0000-0000"
-              value={form.phone}
-              onChange={(e) => set("phone", e.target.value)}
+              placeholder={CONTACT_PLACEHOLDER[form.contact_type] ?? ""}
+              value={form.contact_value}
+              onChange={(e) => set("contact_value", e.target.value)}
             />
           </Field>
           <Field label="이메일 EMAIL">

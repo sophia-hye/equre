@@ -1,5 +1,21 @@
 /** 회원가입 / 프로필 선택지 (가입 폼과 관리자 필터에서 공용 사용) */
 
+export const CONTACT_TYPES = [
+  "휴대폰",
+  "인스타그램",
+  "카카오톡 ID",
+  "이메일(다른)",
+  "기타",
+] as const;
+
+export const CONTACT_PLACEHOLDER: Record<string, string> = {
+  "휴대폰": "010-0000-0000",
+  "인스타그램": "@instagram_id",
+  "카카오톡 ID": "kakao_id",
+  "이메일(다른)": "other@email.com",
+  "기타": "연락 가능한 정보를 적어주세요",
+};
+
 export const USER_TYPES = [
   "학생",
   "학부모",

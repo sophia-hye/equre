@@ -11,6 +11,8 @@ create table if not exists public.equre_profiles (
   name text,
   role text not null default 'user' check (role in ('user', 'admin')),
   phone text,
+  contact_type text,
+  contact_value text,
   user_type text,
   age_group text,
   gender text,
@@ -24,6 +26,8 @@ create table if not exists public.equre_profiles (
 
 -- 기존 설치 대상 마이그레이션 (컬럼 없으면 추가)
 alter table public.equre_profiles add column if not exists phone text;
+alter table public.equre_profiles add column if not exists contact_type text;
+alter table public.equre_profiles add column if not exists contact_value text;
 alter table public.equre_profiles add column if not exists user_type text;
 alter table public.equre_profiles add column if not exists age_group text;
 alter table public.equre_profiles add column if not exists gender text;
@@ -55,14 +59,15 @@ set search_path = public
 as $$
 begin
   insert into public.equre_profiles (
-    id, email, name, phone, user_type, age_group, gender,
+    id, email, name, contact_type, contact_value, user_type, age_group, gender,
     region, language, interests, referral, marketing_consent
   )
   values (
     new.id,
     new.email,
     coalesce(new.raw_user_meta_data ->> 'name', ''),
-    new.raw_user_meta_data ->> 'phone',
+    new.raw_user_meta_data ->> 'contact_type',
+    new.raw_user_meta_data ->> 'contact_value',
     new.raw_user_meta_data ->> 'user_type',
     new.raw_user_meta_data ->> 'age_group',
     new.raw_user_meta_data ->> 'gender',

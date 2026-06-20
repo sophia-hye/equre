@@ -153,11 +153,11 @@ export function MemberTable({ initialMembers, currentUserId }: Props) {
         <table className="w-full min-w-[1080px] text-left text-sm">
           <thead>
             <tr className="border-b border-line-strong">
-              {["이름", "이메일", "유형", "연령대", "지역", "관심사", "역할", "지원서", "관리"].map(
+              {["이름", "이메일", "연락처", "유형", "연령대", "지역", "관심사", "역할", "지원서", "관리"].map(
                 (h, i) => (
                   <th
                     key={h}
-                    className={`label px-4 py-3 text-muted ${i === 8 ? "text-right" : ""}`}
+                    className={`label px-4 py-3 text-muted ${i === 9 ? "text-right" : ""}`}
                   >
                     {h}
                   </th>
@@ -175,6 +175,18 @@ export function MemberTable({ initialMembers, currentUserId }: Props) {
                   )}
                 </td>
                 <td className="px-4 py-3 text-muted">{m.email}</td>
+                <td className="px-4 py-3 text-muted">
+                  {m.contact_value ? (
+                    <>
+                      <span className="text-faint">
+                        {m.contact_type || "연락처"}
+                      </span>{" "}
+                      {m.contact_value}
+                    </>
+                  ) : (
+                    m.phone || "—"
+                  )}
+                </td>
                 <td className="px-4 py-3 text-muted">{m.user_type || "—"}</td>
                 <td className="px-4 py-3 text-muted">{m.age_group || "—"}</td>
                 <td className="px-4 py-3 text-muted">{m.region || "—"}</td>
@@ -248,7 +260,7 @@ export function MemberTable({ initialMembers, currentUserId }: Props) {
             ))}
             {filtered.length === 0 && (
               <tr>
-                <td colSpan={9} className="px-4 py-10 text-center text-muted">
+                <td colSpan={10} className="px-4 py-10 text-center text-muted">
                   조건에 맞는 회원이 없습니다.
                 </td>
               </tr>
