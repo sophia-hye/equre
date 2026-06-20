@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { supabaseConfigured } from "@/lib/supabase/env";
+import { useMessages } from "@/components/i18n/LocaleProvider";
 
 type State =
   | { status: "loading" }
@@ -11,6 +12,7 @@ type State =
   | { status: "user"; name: string; isAdmin: boolean };
 
 export function AuthNav() {
+  const m = useMessages();
   const [state, setState] = useState<State>({ status: "loading" });
 
   useEffect(() => {
@@ -67,7 +69,7 @@ export function AuthNav() {
           {state.name}
         </Link>
         <Link href="/logout" className={linkClass}>
-          로그아웃
+          {m.common.logout}
         </Link>
       </div>
     );
@@ -75,7 +77,7 @@ export function AuthNav() {
 
   return (
     <Link href="/login" className={linkClass}>
-      로그인
+      {m.common.login}
     </Link>
   );
 }

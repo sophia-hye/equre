@@ -7,6 +7,7 @@ import { nav } from "@/lib/site";
 import { Logo } from "@/components/ui/Logo";
 import { createClient } from "@/lib/supabase/client";
 import { supabaseConfigured } from "@/lib/supabase/env";
+import { useMessages } from "@/components/i18n/LocaleProvider";
 
 type Auth =
   | { status: "loading" }
@@ -14,6 +15,7 @@ type Auth =
   | { status: "user"; name: string; isAdmin: boolean };
 
 export function MobileMenu() {
+  const m = useMessages();
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -85,11 +87,11 @@ export function MobileMenu() {
           <span className="flex items-center gap-2 text-sm">
             <span className="h-2 w-2 rounded-full bg-accent" aria-hidden />
             <strong className="font-semibold text-ink">{auth.name}</strong>
-            <span className="text-muted">님 · 로그인됨</span>
+            <span className="text-muted">{m.common.signedIn}</span>
           </span>
           {auth.isAdmin && (
             <span className="border border-line-strong px-2 py-0.5 text-xs font-semibold text-ink">
-              관리자
+              {m.common.adminBadge}
             </span>
           )}
         </div>
@@ -144,11 +146,11 @@ export function MobileMenu() {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-5 pb-8">
           {loggedIn ? (
             <Link href="/mypage" onClick={close} className="label text-muted">
-              마이페이지
+              {m.common.mypage}
             </Link>
           ) : (
             <Link href="/signup" onClick={close} className="label text-muted">
-              회원가입
+              {m.common.signup}
             </Link>
           )}
         </div>

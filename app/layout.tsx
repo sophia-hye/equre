@@ -4,6 +4,8 @@ import { site } from "@/lib/site";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingContact } from "@/components/FloatingContact";
+import { LocaleProvider } from "@/components/i18n/LocaleProvider";
+import { getLocale } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
   title: {
@@ -19,13 +21,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getLocale();
   return (
-    <html lang="ko">
+    <html lang={locale}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -43,10 +46,12 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen antialiased">
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <FloatingContact />
+        <LocaleProvider initialLocale={locale}>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <FloatingContact />
+        </LocaleProvider>
       </body>
     </html>
   );

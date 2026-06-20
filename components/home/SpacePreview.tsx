@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { IconArrowRight } from "@/components/ui/icons";
+import { getMessages } from "@/lib/i18n/server";
 
-export function SpacePreview() {
+export async function SpacePreview() {
+  const m = (await getMessages()).spacePreview;
   return (
     <section className="border-b border-line-strong py-24 md:py-32">
       <Container>
@@ -10,22 +12,21 @@ export function SpacePreview() {
           <div className="lg:col-span-6">
             <div className="mb-6 flex items-center gap-3">
               <span className="h-px w-8 bg-line-strong" aria-hidden />
-              <span className="label text-ink">Space Branding / 05</span>
+              <span className="label text-ink">{m.kicker}</span>
             </div>
             <h2 className="font-display text-[2.25rem] font-bold leading-[1.05] tracking-tight md:text-6xl">
-              &ldquo;병원이나 학원이 아닌,
+              {m.title1}
               <br />
-              <span className="italic text-accent">힙한 아지트.</span>&rdquo;
+              <span className="italic text-accent">{m.titleAccent}</span>
             </h2>
             <p className="mt-7 max-w-md leading-relaxed text-muted md:text-lg">
-              노출 콘크리트와 네온이 어우러진 SEOULITE HANNAM. Sober Bar와 Tech
-              Showroom을 갖춘 프리미엄 웰니스 라이프스타일 공간.
+              {m.body}
             </p>
             <Link
               href="/space"
               className="group mt-9 inline-flex items-center gap-2 text-sm font-medium text-ink transition-colors hover:text-accent"
             >
-              <span className="link-underline">공간 둘러보기</span>
+              <span className="link-underline">{m.link}</span>
               <IconArrowRight
                 width={16}
                 height={16}
@@ -34,7 +35,6 @@ export function SpacePreview() {
             </Link>
           </div>
 
-          {/* terracotta-duotone textured panel */}
           <div className="lg:col-span-6">
             <div
               className="relative aspect-[4/3] w-full overflow-hidden border border-line-strong"
@@ -52,7 +52,7 @@ export function SpacePreview() {
                 aria-hidden
               />
               <span className="absolute bottom-5 left-5 label text-white/90">
-                SEOULITE HANNAM — Sober Bar & Showroom
+                SEOULITE HANNAM — Sober Bar &amp; Showroom
               </span>
             </div>
           </div>
