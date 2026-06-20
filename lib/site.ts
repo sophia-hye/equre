@@ -9,8 +9,47 @@ export const site = {
   location: "SEOULITE HANNAM",
 } as const;
 
-export const nav = [
-  { label: "About", href: "/about" },
-  { label: "Programs", href: "/programs" },
+export type NavChild = { label: string; href: string; desc?: string };
+export type NavItem = { label: string; href?: string; children?: NavChild[] };
+
+export const nav: NavItem[] = [
+  { label: "Program", href: "/programs" },
   { label: "Space", href: "/space" },
-] as const;
+  { label: "Community", href: "/community" },
+  { label: "Private Membership", href: "/private-membership" },
+  {
+    label: "Corporate Profile",
+    children: [
+      { label: "About us", href: "/about", desc: "브랜드 소개" },
+      {
+        label: "Company Presentation",
+        href: "/company-presentation",
+        desc: "회사 소개서",
+      },
+    ],
+  },
+  {
+    label: "News & Events",
+    children: [
+      { label: "Press Releases", href: "/news/press", desc: "보도자료" },
+      {
+        label: "Company Events",
+        href: "/news/events",
+        desc: "SEOULITE HANNAM 외 행사",
+      },
+      { label: "Media", href: "/news/media", desc: "미디어 · 갤러리" },
+    ],
+  },
+  {
+    label: "Corporate Governance",
+    children: [
+      { label: "Management", href: "/governance/management", desc: "경영진" },
+      {
+        label: "Board of Directors",
+        href: "/governance/board",
+        desc: "이사회",
+      },
+    ],
+  },
+  { label: "Resources", href: "/resources" },
+];
