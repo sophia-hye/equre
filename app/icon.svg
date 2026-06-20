@@ -1,0 +1,14 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="14" fill="#c2492b" />
+  <text
+    x="32"
+    y="32"
+    dy="0.35em"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-weight="700"
+    font-size="42"
+    fill="#f3efe6"
+  >e</text>
+  <circle cx="44" cy="16" r="3.4" fill="#f3efe6" />
+</svg>

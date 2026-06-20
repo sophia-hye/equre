@@ -2,12 +2,14 @@ import Link from "next/link";
 
 type LogoProps = {
   className?: string;
+  onClick?: () => void;
 };
 
-export function Logo({ className = "" }: LogoProps) {
+export function Logo({ className = "", onClick }: LogoProps) {
   return (
     <Link
       href="/"
+      onClick={onClick}
       className={`inline-flex items-center transition-opacity hover:opacity-70 ${className}`}
       aria-label="eqüre 홈"
     >

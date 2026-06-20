@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { nav } from "@/lib/site";
+import { Logo } from "@/components/ui/Logo";
 import { createClient } from "@/lib/supabase/client";
 import { supabaseConfigured } from "@/lib/supabase/env";
 
@@ -67,9 +68,7 @@ export function MobileMenu() {
   const overlay = (
     <div className="fixed inset-0 z-[60] flex flex-col bg-bg min-[1340px]:hidden">
       <div className="flex h-16 items-center justify-between border-b border-line-strong px-6">
-        <span className="font-display text-[1.7rem] font-bold lowercase leading-none tracking-tight text-ink">
-          eq&uuml;re
-        </span>
+        <Logo onClick={close} />
         <button
           type="button"
           onClick={close}
