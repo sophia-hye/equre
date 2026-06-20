@@ -55,12 +55,12 @@ export function AuthNav() {
   }
 
   if (state.status === "loading") {
-    return <span className="hidden h-4 w-16 min-[1180px]:block" aria-hidden />;
+    return <span className="hidden h-4 w-16 min-[1340px]:block" aria-hidden />;
   }
 
   if (state.status === "user") {
     return (
-      <div className="hidden items-center gap-4 min-[1180px]:flex">
+      <div className="hidden items-center gap-4 min-[1340px]:flex">
         {state.isAdmin && (
           <Link
             href="/admin"
@@ -87,7 +87,7 @@ export function AuthNav() {
   }
 
   return (
-    <div className="hidden items-center gap-4 min-[1180px]:flex">
+    <div className="hidden items-center gap-4 min-[1340px]:flex">
       <Link
         href="/login"
         className="label whitespace-nowrap text-muted transition-colors hover:text-ink"

@@ -33,11 +33,11 @@ const linkClass =
 export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-line-strong bg-bg/90 backdrop-blur-md">
-      <div className="mx-auto flex h-16 w-full max-w-[1320px] items-center justify-between px-6 lg:px-8">
+      <div className="mx-auto flex h-16 w-full max-w-[1400px] items-center justify-between px-6 lg:px-8">
         <Logo />
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-x-5 min-[1180px]:flex">
+        <nav className="hidden items-center gap-x-5 min-[1340px]:flex">
           {nav.map((item) =>
             item.children ? (
               <div key={item.label} className="group relative">
@@ -83,7 +83,7 @@ export function Header() {
           <AuthNav />
           <Link
             href="/contact"
-            className="hidden whitespace-nowrap bg-accent px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-dim min-[1180px]:inline-flex"
+            className="hidden whitespace-nowrap bg-accent px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-dim min-[1340px]:inline-flex"
           >
             상담 신청
           </Link>

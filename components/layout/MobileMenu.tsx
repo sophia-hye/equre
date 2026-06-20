@@ -25,7 +25,7 @@ export function MobileMenu() {
   };
 
   const overlay = (
-    <div className="fixed inset-0 z-[60] flex flex-col bg-bg min-[1180px]:hidden">
+    <div className="fixed inset-0 z-[60] flex flex-col bg-bg min-[1340px]:hidden">
       <div className="flex h-16 items-center justify-between border-b border-line-strong px-6">
         <span className="font-display text-[1.7rem] font-bold lowercase leading-none tracking-tight text-ink">
           eq&uuml;re
@@ -108,7 +108,7 @@ export function MobileMenu() {
   );
 
   return (
-    <div className="min-[1180px]:hidden">
+    <div className="min-[1340px]:hidden">
       <button
         type="button"
         onClick={() => setOpen(true)}
