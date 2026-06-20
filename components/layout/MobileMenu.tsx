@@ -4,8 +4,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { nav } from "@/lib/site";
+import { Logo } from "@/components/ui/Logo";
 import { createClient } from "@/lib/supabase/client";
 import { supabaseConfigured } from "@/lib/supabase/env";
+import { useMessages } from "@/components/i18n/LocaleProvider";
 
 type Auth =
   | { status: "loading" }
@@ -13,6 +15,7 @@ type Auth =
   | { status: "user"; name: string; isAdmin: boolean };
 
 export function MobileMenu() {
+  const m = useMessages();
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -65,11 +68,9 @@ export function MobileMenu() {
   const loggedIn = auth.status === "user";
 
   const overlay = (
-    <div className="fixed inset-0 z-[60] flex flex-col bg-bg min-[1340px]:hidden">
+    <div className="fixed inset-0 z-[60] flex flex-col bg-bg">
       <div className="flex h-16 items-center justify-between border-b border-line-strong px-6">
-        <span className="font-display text-[1.7rem] font-bold lowercase leading-none tracking-tight text-ink">
-          eq&uuml;re
-        </span>
+        <Logo onClick={close} />
         <button
           type="button"
           onClick={close}
@@ -86,11 +87,11 @@ export function MobileMenu() {
           <span className="flex items-center gap-2 text-sm">
             <span className="h-2 w-2 rounded-full bg-accent" aria-hidden />
             <strong className="font-semibold text-ink">{auth.name}</strong>
-            <span className="text-muted">님 · 로그인됨</span>
+            <span className="text-muted">{m.common.signedIn}</span>
           </span>
           {auth.isAdmin && (
             <span className="border border-line-strong px-2 py-0.5 text-xs font-semibold text-ink">
-              관리자
+              {m.common.adminBadge}
             </span>
           )}
         </div>
@@ -141,39 +142,16 @@ export function MobileMenu() {
           )
         )}
 
-        <Link
-          href="/contact"
-          onClick={close}
-          className="mt-8 bg-accent px-5 py-4 text-center text-base font-medium text-white"
-        >
-          상담 신청
-        </Link>
-
-        {/* 인증 영역 */}
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-5 pb-8">
+        {/* 추가 링크 (로그인/상담신청/로그아웃은 상단 Navbar에 있음) */}
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-5 pb-8">
           {loggedIn ? (
-            <>
-              <Link href="/mypage" onClick={close} className="label text-muted">
-                마이페이지
-              </Link>
-              {auth.isAdmin && (
-                <Link href="/admin" onClick={close} className="label text-accent">
-                  Admin
-                </Link>
-              )}
-              <Link href="/logout" onClick={close} className="label text-muted">
-                로그아웃
-              </Link>
-            </>
+            <Link href="/mypage" onClick={close} className="label text-muted">
+              {m.common.mypage}
+            </Link>
           ) : (
-            <>
-              <Link href="/login" onClick={close} className="label text-muted">
-                로그인
-              </Link>
-              <Link href="/signup" onClick={close} className="label text-muted">
-                회원가입
-              </Link>
-            </>
+            <Link href="/signup" onClick={close} className="label text-muted">
+              {m.common.signup}
+            </Link>
           )}
         </div>
       </nav>
@@ -181,7 +159,7 @@ export function MobileMenu() {
   );
 
   return (
-    <div className="min-[1340px]:hidden">
+    <div>
       <button
         type="button"
         onClick={() => setOpen(true)}

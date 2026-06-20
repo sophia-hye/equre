@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { supabaseConfigured } from "@/lib/supabase/env";
+import { useMessages } from "@/components/i18n/LocaleProvider";
 
 type State =
   | { status: "loading" }
@@ -11,6 +12,7 @@ type State =
   | { status: "user"; name: string; isAdmin: boolean };
 
 export function AuthNav() {
+  const m = useMessages();
   const [state, setState] = useState<State>({ status: "loading" });
 
   useEffect(() => {
@@ -45,51 +47,40 @@ export function AuthNav() {
     return () => sub.subscription.unsubscribe();
   }, []);
 
+  const linkClass =
+    "whitespace-nowrap text-xs font-medium uppercase tracking-wide text-muted transition-colors hover:text-ink sm:text-[0.8rem]";
+
   if (state.status === "loading") {
-    return <span className="hidden h-4 w-16 min-[1340px]:block" aria-hidden />;
+    return <span className="h-4 w-10" aria-hidden />;
   }
 
   if (state.status === "user") {
     return (
-      <div className="hidden items-center gap-4 min-[1340px]:flex">
+      <div className="flex items-center gap-2 sm:gap-3">
         {state.isAdmin && (
           <Link
             href="/admin"
-            className="label whitespace-nowrap text-accent transition-colors hover:text-accent-dim"
+            className="whitespace-nowrap text-xs font-semibold uppercase tracking-wide text-accent transition-colors hover:text-accent-dim sm:text-[0.8rem]"
           >
             Admin
           </Link>
         )}
-        <Link
-          href="/mypage"
-          className="label whitespace-nowrap text-muted transition-colors hover:text-ink"
-        >
+        <Link href="/mypage" className={`hidden ${linkClass} sm:inline`}>
           {state.name}
         </Link>
-        <Link
-          href="/logout"
-          className="label whitespace-nowrap text-muted transition-colors hover:text-ink"
-        >
-          로그아웃
+        <Link href="/logout" className={linkClass}>
+          {m.common.logout}
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="hidden items-center gap-4 min-[1340px]:flex">
-      <Link
-        href="/login"
-        className="label whitespace-nowrap text-muted transition-colors hover:text-ink"
-      >
-        로그인
-      </Link>
-      <Link
-        href="/signup"
-        className="label whitespace-nowrap text-muted transition-colors hover:text-ink"
-      >
-        회원가입
-      </Link>
-    </div>
+    <Link
+      href="/login"
+      className="whitespace-nowrap border border-line-strong px-3 py-2 text-xs font-medium text-ink transition-colors hover:bg-ink hover:text-bg sm:px-4 sm:py-2.5 sm:text-sm"
+    >
+      {m.common.login}
+    </Link>
   );
 }

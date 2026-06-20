@@ -9,21 +9,23 @@ import { supabaseConfigured } from "@/lib/supabase/env";
 import { ApplicationForm } from "@/components/application/ApplicationForm";
 import { SendForm } from "@/components/admin/SendForm";
 import type { ApplicationData } from "@/lib/application/fields";
+import { getMessages } from "@/lib/i18n/server";
 
 export const metadata: Metadata = { title: "지원서 상세" };
 export const dynamic = "force-dynamic";
-
-const STATUS_LABEL: Record<string, string> = {
-  requested: "작성 요청됨",
-  submitted: "제출 완료",
-  sent: "발송 완료",
-};
 
 export default async function AdminApplicationPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const m = (await getMessages()).admin;
+  const STATUS_LABEL: Record<string, string> = {
+    requested: m.detailRequested,
+    submitted: m.detailSubmitted,
+    sent: m.detailSent,
+  };
+
   if (!supabaseConfigured) redirect("/admin");
   const session = await getSessionUser();
   if (!session) redirect("/login");
@@ -50,9 +52,9 @@ export default async function AdminApplicationPage({
   return (
     <>
       <PageHero
-        kicker="Admin / Application"
+        kicker={m.detailKicker}
         index={STATUS_LABEL[app.status] ?? app.status}
-        title={profile?.name || "지원자"}
+        title={profile?.name || m.applicant}
         description={profile?.email || ""}
       />
       <section className="py-12 md:py-16">
@@ -61,12 +63,12 @@ export default async function AdminApplicationPage({
             href="/admin"
             className="label text-muted transition-colors hover:text-ink"
           >
-            ← 회원 관리로
+            {m.backToMembers}
           </Link>
 
           {!submitted ? (
             <p className="mt-8 border border-line bg-bg-soft p-10 text-center text-muted">
-              아직 회원이 지원서를 제출하지 않았습니다. (상태: 작성 요청됨)
+              {m.notSubmittedYet}
             </p>
           ) : (
             <>
@@ -79,7 +81,7 @@ export default async function AdminApplicationPage({
               </div>
 
               <h2 className="mb-6 font-display text-xl font-bold tracking-tight">
-                제출된 내용
+                {m.submittedContent}
               </h2>
               <ApplicationForm
                 applicationId={app.id}

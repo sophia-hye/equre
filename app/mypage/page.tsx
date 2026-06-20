@@ -7,6 +7,8 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { supabaseConfigured } from "@/lib/supabase/env";
 import { ApplicationForm } from "@/components/application/ApplicationForm";
 import type { ApplicationData } from "@/lib/application/fields";
+import { getLocale, getMessages } from "@/lib/i18n/server";
+import { optionLabel } from "@/lib/profile/options";
 
 export const metadata: Metadata = { title: "마이페이지" };
 export const dynamic = "force-dynamic";
@@ -20,17 +22,20 @@ type Application = {
   sent_at: string | null;
 };
 
-const STATUS_LABEL: Record<Application["status"], string> = {
-  requested: "작성 요청됨",
-  submitted: "제출 완료 (검토 중)",
-  sent: "발송 완료",
-};
-
 export default async function MyPage() {
+  const m = (await getMessages()).mypage;
+  const locale = await getLocale();
+
+  const STATUS_LABEL: Record<Application["status"], string> = {
+    requested: m.statusRequested,
+    submitted: m.statusSubmittedReview,
+    sent: m.statusSent,
+  };
+
   if (!supabaseConfigured) {
     return (
-      <Wrap>
-        <p className="text-muted">Supabase가 설정되지 않았습니다. (.env.local)</p>
+      <Wrap title={m.title}>
+        <p className="text-muted">{m.notConfigured}</p>
       </Wrap>
     );
   }
@@ -47,13 +52,61 @@ export default async function MyPage() {
 
   const apps = (data ?? []) as Application[];
   const active = apps.find((a) => a.status !== "sent") ?? null;
+  const memberName = session.profile?.name || m.defaultName;
+
+  const rows = [
+    { k: m.email, v: session.email },
+    { k: m.phone, v: session.profile?.phone },
+    {
+      k: m.altContact,
+      v: session.profile?.contact_value
+        ? `${
+            session.profile.contact_type
+              ? optionLabel(session.profile.contact_type, locale)
+              : ""
+          } ${session.profile.contact_value}`.trim()
+        : null,
+    },
+    {
+      k: m.userType,
+      v: session.profile?.user_type
+        ? optionLabel(session.profile.user_type, locale)
+        : null,
+    },
+    {
+      k: m.ageGroup,
+      v: session.profile?.age_group
+        ? optionLabel(session.profile.age_group, locale)
+        : null,
+    },
+    {
+      k: m.region,
+      v: session.profile?.region
+        ? optionLabel(session.profile.region, locale)
+        : null,
+    },
+    {
+      k: m.language,
+      v: session.profile?.language
+        ? optionLabel(session.profile.language, locale)
+        : null,
+    },
+    {
+      k: m.interests,
+      v: session.profile?.interests?.length
+        ? session.profile.interests
+            .map((it) => optionLabel(it, locale))
+            .join(", ")
+        : null,
+    },
+  ];
 
   return (
     <>
       <PageHero
-        kicker="My Page"
-        title={`안녕하세요, ${session.profile?.name || "회원"}님`}
-        description="요청된 지원서를 작성하고 제출하실 수 있습니다."
+        kicker={m.kicker}
+        title={m.greeting.replace("{name}", memberName)}
+        description={m.desc}
       />
       <section className="py-12 md:py-16">
         <Container>
@@ -61,41 +114,20 @@ export default async function MyPage() {
           <div className="mb-12 border border-line-strong bg-bg-soft p-6 md:p-8">
             <div className="flex flex-wrap items-center gap-3">
               <span className="bg-accent px-3 py-1 text-xs font-semibold text-white">
-                회원
+                {m.badgeMember}
               </span>
               {session.profile?.role === "admin" && (
                 <span className="border border-line-strong px-3 py-1 text-xs font-semibold text-ink">
-                  관리자
+                  {m.badgeAdmin}
                 </span>
               )}
               <span className="font-display text-lg font-bold tracking-tight">
-                {session.profile?.name || "회원"}님 · 가입 완료
+                {m.joined.replace("{name}", memberName)}
               </span>
             </div>
-            <p className="mt-3 text-sm text-muted">
-              equre의 전체 콘텐츠를 이용하실 수 있는 회원 상태입니다.
-            </p>
+            <p className="mt-3 text-sm text-muted">{m.statusNote}</p>
             <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line pt-6 sm:grid-cols-3">
-              {[
-                { k: "이메일", v: session.email },
-                { k: "휴대폰", v: session.profile?.phone },
-                {
-                  k: "추가 연락처",
-                  v: session.profile?.contact_value
-                    ? `${session.profile.contact_type ?? ""} ${session.profile.contact_value}`.trim()
-                    : null,
-                },
-                { k: "사용자 유형", v: session.profile?.user_type },
-                { k: "연령대", v: session.profile?.age_group },
-                { k: "거주 지역", v: session.profile?.region },
-                { k: "선호 언어", v: session.profile?.language },
-                {
-                  k: "관심사",
-                  v: session.profile?.interests?.length
-                    ? session.profile.interests.join(", ")
-                    : null,
-                },
-              ].map((row) => (
+              {rows.map((row) => (
                 <div key={row.k}>
                   <dt className="label text-faint">{row.k}</dt>
                   <dd className="mt-1 text-sm text-ink">{row.v || "—"}</dd>
@@ -107,11 +139,9 @@ export default async function MyPage() {
           {apps.length === 0 && (
             <div className="border border-line bg-bg-soft p-10 text-center">
               <p className="font-display text-lg font-semibold">
-                요청된 지원서가 없습니다
+                {m.noAppTitle}
               </p>
-              <p className="mt-2 text-sm text-muted">
-                관리자가 지원서 작성을 요청하면 이곳에 표시됩니다.
-              </p>
+              <p className="mt-2 text-sm text-muted">{m.noAppDesc}</p>
             </div>
           )}
 
@@ -122,16 +152,13 @@ export default async function MyPage() {
                   {STATUS_LABEL[active.status]}
                 </span>
                 <h2 className="font-display text-2xl font-bold tracking-tight">
-                  국제학생 전형 지원서
+                  {m.appTitle}
                 </h2>
               </div>
 
               {active.status === "submitted" ? (
                 <>
-                  <p className="mb-8 text-sm text-muted">
-                    제출이 완료되었습니다. 관리자 검토 후 안내드립니다. 내용은
-                    아래에서 확인할 수 있습니다.
-                  </p>
+                  <p className="mb-8 text-sm text-muted">{m.submittedNote}</p>
                   <ApplicationForm
                     applicationId={active.id}
                     initialData={active.data}
@@ -150,11 +177,9 @@ export default async function MyPage() {
           {!active && apps.length > 0 && (
             <div className="border border-line bg-bg-soft p-10 text-center">
               <p className="font-display text-lg font-semibold">
-                발송 완료된 지원서가 있습니다
+                {m.sentDoneTitle}
               </p>
-              <p className="mt-2 text-sm text-muted">
-                추가 요청이 있으면 이곳에 표시됩니다.
-              </p>
+              <p className="mt-2 text-sm text-muted">{m.sentDoneDesc}</p>
             </div>
           )}
         </Container>
@@ -163,11 +188,19 @@ export default async function MyPage() {
   );
 }
 
-function Wrap({ children }: { children: React.ReactNode }) {
+function Wrap({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <section className="py-24">
       <Container>
-        <h1 className="font-display text-3xl font-bold tracking-tight">마이페이지</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight">
+          {title}
+        </h1>
         <div className="mt-6">{children}</div>
       </Container>
     </section>

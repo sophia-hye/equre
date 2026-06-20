@@ -16,7 +16,9 @@ import {
   REFERRALS,
   REGIONS,
   USER_TYPES,
+  optionLabel,
 } from "@/lib/profile/options";
+import { useLocale, useMessages } from "@/components/i18n/LocaleProvider";
 
 type Form = {
   name: string;
@@ -81,6 +83,9 @@ function Field({
 
 export function SignupForm() {
   const router = useRouter();
+  const t = useMessages().signup;
+  const cm = useMessages().common;
+  const { locale } = useLocale();
   const [form, setForm] = useState<Form>(EMPTY);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -99,7 +104,6 @@ export function SignupForm() {
     }));
   }
 
-  // 비밀번호 요건
   const pwTyped = form.password.length > 0;
   const pwLenOk = form.password.length >= 8;
   const pwSpecialOk = /[^A-Za-z0-9]/.test(form.password);
@@ -108,16 +112,12 @@ export function SignupForm() {
     e.preventDefault();
     setError("");
 
-    if (!supabaseConfigured)
-      return setError("Supabase가 아직 설정되지 않았습니다. (.env.local 확인)");
-    if (!form.name.trim()) return setError("이름을 입력해 주세요.");
-    if (form.phone.replace(/\D/g, "").length < 7)
-      return setError("휴대폰 번호를 입력해 주세요. (해외 번호는 국가번호 포함)");
-    if (!validateEmail(form.email)) return setError("올바른 이메일을 입력해 주세요.");
-    if (!pwLenOk || !pwSpecialOk)
-      return setError("비밀번호는 8자 이상이며 특수문자를 포함해야 합니다.");
-    if (!form.terms)
-      return setError("이용약관 및 개인정보 처리방침에 동의해 주세요.");
+    if (!supabaseConfigured) return setError(t.errConfig);
+    if (!form.name.trim()) return setError(t.errName);
+    if (form.phone.replace(/\D/g, "").length < 7) return setError(t.errPhone);
+    if (!validateEmail(form.email)) return setError(t.errEmail);
+    if (!pwLenOk || !pwSpecialOk) return setError(t.errPw);
+    if (!form.terms) return setError(t.errTerms);
 
     setLoading(true);
     const supabase = createClient();
@@ -144,12 +144,7 @@ export function SignupForm() {
     setLoading(false);
 
     if (err) return setError(err.message);
-
-    if (data.session) {
-      setDone("active");
-    } else {
-      setDone("confirm");
-    }
+    setDone(data.session ? "active" : "confirm");
   }
 
   if (done === "active") {
@@ -158,14 +153,11 @@ export function SignupForm() {
         <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-accent/15 text-2xl text-accent">
           ✓
         </div>
-        <p className="mt-5 label text-accent">회원 가입 완료</p>
+        <p className="mt-5 label text-accent">{t.doneTag}</p>
         <h3 className="mt-2 font-display text-2xl font-bold tracking-tight">
-          환영합니다, {form.name}님!
+          {t.doneTitle.replace("{name}", form.name)}
         </h3>
-        <p className="mt-3 text-sm leading-relaxed text-muted">
-          이제 <strong className="text-ink">eqüre의 전체 콘텐츠</strong>를 보실 수
-          있어요. 마이페이지에서 회원 상태를 확인할 수 있습니다.
-        </p>
+        <p className="mt-3 text-sm leading-relaxed text-muted">{t.doneBody}</p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           <button
             type="button"
@@ -175,7 +167,7 @@ export function SignupForm() {
             }}
             className="bg-accent px-7 py-3 text-sm font-medium text-white transition-colors hover:bg-accent-dim"
           >
-            전체 콘텐츠 둘러보기
+            {t.doneBtn1}
           </button>
           <button
             type="button"
@@ -185,7 +177,7 @@ export function SignupForm() {
             }}
             className="border border-line-strong px-7 py-3 text-sm font-medium text-ink transition-colors hover:bg-ink hover:text-bg"
           >
-            마이페이지
+            {t.doneBtn2}
           </button>
         </div>
       </div>
@@ -196,11 +188,10 @@ export function SignupForm() {
     return (
       <div className="border border-line bg-surface p-8 text-center">
         <h3 className="font-display text-xl font-bold tracking-tight">
-          이메일을 확인해 주세요
+          {t.confirmTitle}
         </h3>
         <p className="mt-3 text-sm leading-relaxed text-muted">
-          {form.email}로 인증 링크를 보냈습니다. 링크를 클릭하면 가입이
-          완료되고 전체 콘텐츠가 열립니다.
+          {t.confirmBody.replace("{email}", form.email)}
         </p>
       </div>
     );
@@ -210,13 +201,11 @@ export function SignupForm() {
     <form onSubmit={handleSubmit} noValidate className="space-y-12">
       {/* stepper */}
       <div className="flex flex-wrap gap-2">
-        {["계정", "프로필", "관심사"].map((s, i) => (
+        {[t.step1, t.step2, t.step3].map((s, i) => (
           <span
             key={s}
             className={`px-4 py-1.5 text-xs font-semibold ${
-              i === 0
-                ? "bg-accent text-white"
-                : "border border-line-strong text-ink"
+              i === 0 ? "bg-accent text-white" : "border border-line-strong text-ink"
             }`}
           >
             {i + 1} {s}
@@ -224,35 +213,33 @@ export function SignupForm() {
         ))}
       </div>
 
-      {/* 1. 계정 */}
+      {/* 1. Account */}
       <section>
         <div className="flex items-center gap-3">
           <StepBadge n={1} />
           <h2 className="font-display text-xl font-bold tracking-tight">
-            계정 · Account
+            {t.secAccount}
           </h2>
         </div>
         <div className="mt-6 grid gap-5 md:grid-cols-2">
-          <Field label="이름 NAME" half>
+          <Field label={t.name} half>
             <input
               className={authInput}
-              placeholder="홍길동"
+              placeholder={t.namePh}
               value={form.name}
               onChange={(e) => set("name", e.target.value)}
             />
           </Field>
-          <Field label="휴대폰 PHONE" half>
+          <Field label={t.phone} half>
             <input
               className={authInput}
               placeholder="+82 10-1234-5678"
               value={form.phone}
               onChange={(e) => set("phone", e.target.value)}
             />
-            <p className="mt-1.5 text-xs text-faint">
-              해외 번호는 국가번호(+1 등)를 포함해 주세요.
-            </p>
+            <p className="mt-1.5 text-xs text-faint">{t.phoneHint}</p>
           </Field>
-          <Field label="이메일 EMAIL">
+          <Field label={t.email}>
             <input
               type="email"
               className={authInput}
@@ -261,7 +248,7 @@ export function SignupForm() {
               onChange={(e) => set("email", e.target.value)}
             />
           </Field>
-          <Field label="비밀번호 PASSWORD">
+          <Field label={t.password}>
             <input
               type="password"
               className={authInput}
@@ -271,30 +258,27 @@ export function SignupForm() {
               aria-invalid={pwTyped && (!pwLenOk || !pwSpecialOk)}
             />
             <ul className="mt-2 space-y-1">
-              <PwRule ok={pwLenOk} typed={pwTyped} text="8자 이상" />
-              <PwRule
-                ok={pwSpecialOk}
-                typed={pwTyped}
-                text="특수문자 포함 (!@#$%^&* 등)"
-              />
+              <PwRule ok={pwLenOk} typed={pwTyped} text={t.pwLen} />
+              <PwRule ok={pwSpecialOk} typed={pwTyped} text={t.pwSpecial} />
             </ul>
           </Field>
 
-          <Field label="추가 연락 수단 (선택)" half>
+          <Field label={t.contactType} half>
             <Select
               value={form.contact_type}
               onChange={(v) => set("contact_type", v)}
-              options={CONTACT_TYPES.filter((t) => t !== "휴대폰")}
-              placeholder="선택 안 함"
+              options={CONTACT_TYPES.filter((x) => x !== "휴대폰")}
+              placeholder={t.contactTypePh}
+              locale={locale}
             />
           </Field>
-          <Field label="추가 연락처 (선택)" half>
+          <Field label={t.contactValue} half>
             <input
               className={authInput}
               placeholder={
                 form.contact_type
                   ? CONTACT_PLACEHOLDER[form.contact_type] ?? ""
-                  : "예) @instagram_id"
+                  : t.contactValuePh
               }
               value={form.contact_value}
               onChange={(e) => set("contact_value", e.target.value)}
@@ -303,66 +287,73 @@ export function SignupForm() {
         </div>
       </section>
 
-      {/* 2. 프로필 */}
+      {/* 2. Profile */}
       <section>
         <div className="flex items-center gap-3">
           <StepBadge n={2} />
           <h2 className="font-display text-xl font-bold tracking-tight">
-            프로필 · About you
+            {t.secProfile}
           </h2>
         </div>
         <div className="mt-6 grid gap-5 md:grid-cols-2">
-          <Field label="나는 어떤 사람인가요? I AM…">
+          <Field label={t.userType}>
             <Select
               value={form.user_type}
               onChange={(v) => set("user_type", v)}
               options={USER_TYPES}
-              placeholder="선택해주세요"
+              placeholder={t.userTypePh}
+              locale={locale}
             />
           </Field>
-          <Field label="연령대 AGE" half>
+          <Field label={t.age} half>
             <Select
               value={form.age_group}
               onChange={(v) => set("age_group", v)}
               options={AGE_GROUPS}
+              placeholder={t.selectPh}
+              locale={locale}
             />
           </Field>
-          <Field label="성별 GENDER" half>
+          <Field label={t.gender} half>
             <Select
               value={form.gender}
               onChange={(v) => set("gender", v)}
               options={GENDERS}
+              placeholder={t.selectPh}
+              locale={locale}
             />
           </Field>
-          <Field label="거주 지역 LOCATION" half>
+          <Field label={t.region} half>
             <Select
               value={form.region}
               onChange={(v) => set("region", v)}
               options={REGIONS}
+              placeholder={t.selectPh}
+              locale={locale}
             />
           </Field>
-          <Field label="선호 언어 LANGUAGE" half>
+          <Field label={t.language} half>
             <Select
               value={form.language}
               onChange={(v) => set("language", v)}
               options={LANGUAGES}
+              placeholder={t.selectPh}
+              locale={locale}
             />
           </Field>
         </div>
       </section>
 
-      {/* 3. 관심사 */}
+      {/* 3. Interests */}
       <section>
         <div className="flex items-center gap-3">
           <StepBadge n={3} />
           <h2 className="font-display text-xl font-bold tracking-tight">
-            관심사 · Interests
+            {t.secInterests}
           </h2>
         </div>
         <div className="mt-6">
-          <p className="label mb-3 text-muted">
-            eqüre에서 무엇을 찾고 있나요? (복수 선택)
-          </p>
+          <p className="label mb-3 text-muted">{t.interestsPrompt}</p>
           <div className="flex flex-wrap gap-2">
             {INTERESTS.map((item) => {
               const active = form.interests.includes(item);
@@ -377,7 +368,7 @@ export function SignupForm() {
                       : "border-line-strong text-ink hover:border-accent"
                   }`}
                 >
-                  {item}
+                  {optionLabel(item, locale)}
                 </button>
               );
             })}
@@ -385,11 +376,13 @@ export function SignupForm() {
         </div>
 
         <div className="mt-6">
-          <label className={authLabel}>어떻게 알게 되셨나요? HOW DID YOU HEAR</label>
+          <label className={authLabel}>{t.referral}</label>
           <Select
             value={form.referral}
             onChange={(v) => set("referral", v)}
             options={REFERRALS}
+            placeholder={t.selectPh}
+            locale={locale}
           />
         </div>
 
@@ -401,7 +394,7 @@ export function SignupForm() {
               checked={form.marketing_consent}
               onChange={(e) => set("marketing_consent", e.target.checked)}
             />
-            <span>이벤트 · 웰니스 소식 받기 (마케팅 정보 수신 동의)</span>
+            <span>{t.marketing}</span>
           </label>
           <label className="flex items-start gap-3 text-sm text-ink">
             <input
@@ -411,8 +404,7 @@ export function SignupForm() {
               onChange={(e) => set("terms", e.target.checked)}
             />
             <span>
-              <span className="text-accent">(필수)</span> 이용약관 및 개인정보
-              처리방침에 동의합니다
+              <span className="text-accent">{t.termsRequired}</span> {t.termsPre}
             </span>
           </label>
         </div>
@@ -425,13 +417,13 @@ export function SignupForm() {
         disabled={loading}
         className="w-full bg-accent px-6 py-4 text-base font-semibold text-white transition-colors hover:bg-accent-dim disabled:opacity-50"
       >
-        {loading ? "가입 중…" : "가입하고 전체 콘텐츠 열기"}
+        {loading ? t.submitting : t.submit}
       </button>
 
       <p className="text-center text-sm text-muted">
-        이미 계정이 있으신가요?{" "}
+        {t.haveAccount}{" "}
         <Link href="/login" className="font-medium text-accent link-underline">
-          로그인
+          {cm.login}
         </Link>
       </p>
     </form>
@@ -447,7 +439,6 @@ function PwRule({
   typed: boolean;
   text: string;
 }) {
-  // 입력 전: 연회색 / 충족: 회색 체크 / 미충족(입력 후): 빨강
   const color = !typed ? "text-faint" : ok ? "text-muted" : "text-alert";
   return (
     <li className={`flex items-center gap-1.5 text-xs ${color}`}>
@@ -461,12 +452,14 @@ function Select({
   value,
   onChange,
   options,
-  placeholder = "선택",
+  placeholder,
+  locale,
 }: {
   value: string;
   onChange: (v: string) => void;
   options: readonly string[];
-  placeholder?: string;
+  placeholder: string;
+  locale: string;
 }) {
   return (
     <select
@@ -477,7 +470,7 @@ function Select({
       <option value="">{placeholder}</option>
       {options.map((o) => (
         <option key={o} value={o}>
-          {o}
+          {optionLabel(o, locale)}
         </option>
       ))}
     </select>

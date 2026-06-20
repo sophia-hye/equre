@@ -4,9 +4,15 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   APPLICATION_SECTIONS,
+  fieldHint,
+  fieldLabel,
+  fieldPlaceholder,
+  sectionDesc,
+  sectionTitle,
   type ApplicationData,
   type Field,
 } from "@/lib/application/fields";
+import { useLocale, useMessages } from "@/components/i18n/LocaleProvider";
 
 const inputClass =
   "w-full border border-line bg-surface px-4 py-2.5 text-sm text-ink outline-none transition-colors placeholder:text-faint focus:border-accent";
@@ -23,6 +29,8 @@ export function ApplicationForm({
   readOnly = false,
 }: Props) {
   const router = useRouter();
+  const t = useMessages().application;
+  const { locale } = useLocale();
   const [data, setData] = useState<ApplicationData>(initialData ?? {});
   const [busy, setBusy] = useState<"save" | "submit" | null>(null);
   const [error, setError] = useState("");
@@ -37,10 +45,10 @@ export function ApplicationForm({
     if (action === "submit") {
       const nameMissing = !String(data.student_name_en ?? "").trim();
       if (nameMissing) {
-        setError("학생 영문 이름은 필수입니다.");
+        setError(t.errName);
         return;
       }
-      if (!confirm("제출 후에는 관리자 확인 단계로 넘어갑니다. 제출할까요?")) return;
+      if (!confirm(t.confirmSubmit)) return;
     }
     setBusy(action);
     const res = await fetch(`/api/applications/${applicationId}`, {
@@ -51,39 +59,42 @@ export function ApplicationForm({
     setBusy(null);
     if (!res.ok) {
       const j = await res.json().catch(() => ({}));
-      setError(j.error ?? "저장에 실패했습니다.");
+      setError(j.error ?? t.errSave);
       return;
     }
     if (action === "submit") {
       router.refresh();
     } else {
-      setSavedAt(new Date().toLocaleTimeString("ko-KR"));
+      setSavedAt(new Date().toLocaleTimeString(locale === "en" ? "en-US" : "ko-KR"));
     }
   }
 
   return (
     <div className="space-y-12">
-      {APPLICATION_SECTIONS.map((section) => (
-        <div key={section.title}>
-          <h2 className="font-display text-xl font-bold tracking-tight">
-            {section.title}
-          </h2>
-          {section.description && (
-            <p className="mt-1 text-sm text-muted">{section.description}</p>
-          )}
-          <div className="mt-6 grid gap-5 md:grid-cols-2">
-            {section.fields.map((field) => (
-              <FieldRow
-                key={field.key}
-                field={field}
-                value={data[field.key]}
-                onChange={(v) => update(field.key, v)}
-                readOnly={readOnly}
-              />
-            ))}
+      {APPLICATION_SECTIONS.map((section) => {
+        const desc = sectionDesc(section, locale);
+        return (
+          <div key={section.title}>
+            <h2 className="font-display text-xl font-bold tracking-tight">
+              {sectionTitle(section, locale)}
+            </h2>
+            {desc && <p className="mt-1 text-sm text-muted">{desc}</p>}
+            <div className="mt-6 grid gap-5 md:grid-cols-2">
+              {section.fields.map((field) => (
+                <FieldRow
+                  key={field.key}
+                  field={field}
+                  value={data[field.key]}
+                  onChange={(v) => update(field.key, v)}
+                  readOnly={readOnly}
+                  locale={locale}
+                  selectPh={t.selectPh}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
 
       {error && <p className="text-sm text-alert">{error}</p>}
 
@@ -95,7 +106,7 @@ export function ApplicationForm({
             onClick={() => send("submit")}
             className="bg-accent px-7 py-3 text-sm font-medium text-white transition-colors hover:bg-accent-dim disabled:opacity-50"
           >
-            {busy === "submit" ? "제출 중…" : "제출하기"}
+            {busy === "submit" ? t.submitting : t.submit}
           </button>
           <button
             type="button"
@@ -103,10 +114,12 @@ export function ApplicationForm({
             onClick={() => send("save")}
             className="border border-line-strong px-7 py-3 text-sm font-medium text-ink transition-colors hover:bg-ink hover:text-bg disabled:opacity-50"
           >
-            {busy === "save" ? "저장 중…" : "임시 저장"}
+            {busy === "save" ? t.saving : t.save}
           </button>
           {savedAt && (
-            <span className="text-xs text-muted">{savedAt} 임시 저장됨</span>
+            <span className="text-xs text-muted">
+              {t.savedAt.replace("{time}", savedAt)}
+            </span>
           )}
         </div>
       )}
@@ -119,18 +132,25 @@ function FieldRow({
   value,
   onChange,
   readOnly,
+  locale,
+  selectPh,
 }: {
   field: Field;
   value: string | boolean | undefined;
   onChange: (v: string | boolean) => void;
   readOnly: boolean;
+  locale: "ko" | "en";
+  selectPh: string;
 }) {
   const wide = field.type === "textarea" || field.type === "checkbox";
+  const label = fieldLabel(field, locale);
+  const hint = fieldHint(field, locale);
+  const placeholder = fieldPlaceholder(field, locale);
   return (
     <div className={wide ? "md:col-span-2" : ""}>
       {field.type !== "checkbox" && (
         <label className="label mb-2 block text-muted">
-          {field.label}
+          {label}
           {field.required && <span className="text-alert"> *</span>}
         </label>
       )}
@@ -141,7 +161,7 @@ function FieldRow({
           className={`${inputClass} resize-none`}
           value={(value as string) ?? ""}
           onChange={(e) => onChange(e.target.value)}
-          placeholder={field.placeholder}
+          placeholder={placeholder}
           readOnly={readOnly}
         />
       ) : field.type === "select" ? (
@@ -151,7 +171,7 @@ function FieldRow({
           onChange={(e) => onChange(e.target.value)}
           disabled={readOnly}
         >
-          <option value="">선택</option>
+          <option value="">{selectPh}</option>
           {field.options?.map((o) => (
             <option key={o} value={o}>
               {o}
@@ -167,7 +187,7 @@ function FieldRow({
             onChange={(e) => onChange(e.target.checked)}
             disabled={readOnly}
           />
-          <span>{field.label}</span>
+          <span>{label}</span>
         </label>
       ) : (
         <input
@@ -175,14 +195,12 @@ function FieldRow({
           className={inputClass}
           value={(value as string) ?? ""}
           onChange={(e) => onChange(e.target.value)}
-          placeholder={field.placeholder}
+          placeholder={placeholder}
           readOnly={readOnly}
         />
       )}
 
-      {field.hint && (
-        <p className="mt-1.5 text-xs text-faint">{field.hint}</p>
-      )}
+      {hint && <p className="mt-1.5 text-xs text-faint">{hint}</p>}
     </div>
   );
 }

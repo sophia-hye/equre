@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useMessages } from "@/components/i18n/LocaleProvider";
 
 type Location = {
   name: string;
@@ -10,26 +11,13 @@ type Location = {
   description: string;
 };
 
-const locations: Location[] = [
-  {
-    name: "CARROT",
-    image: "/space/carrot.png",
-    address: "서울 용산구 한남동 이태원로 268-20",
-    href: "https://www.carrotglobal.com/",
-    description:
-      "글로벌 교육·기업 HRD 전문기업으로, 한남캠퍼스 내 포럼·컨퍼런스형 교육공간을 보유하고 있다. 웰니스 한남에서는 글로벌 커뮤니티, 기업교육, 컨퍼런스 운영을 연결하는 교육·네트워킹 거점으로 기능한다.",
-  },
-  {
-    name: "사:유",
-    image: "/space/sayu.png",
-    address: "서울 용산구 신흥로 11, 해방촌",
-    href: "https://centerone.kr/",
-    description:
-      "B1 갤러리 / 1~2F 웰니스 카페 사:유 / 3~4F 명상원, 루프탑을 갖춘 복합 웰니스 공간이다. 웰니스 한남에서는 전시, 카페, 명상, 루프탑 프로그램까지 한 공간에서 연결되는 핵심 행사 거점으로 기능한다.",
-  },
-];
-
-function LocationCard({ loc }: { loc: Location }) {
+function LocationCard({
+  loc,
+  imgPending,
+}: {
+  loc: Location;
+  imgPending: string;
+}) {
   const [imgError, setImgError] = useState(false);
 
   return (
@@ -39,7 +27,7 @@ function LocationCard({ loc }: { loc: Location }) {
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={loc.image}
-            alt={`${loc.name} 건물 일러스트`}
+            alt={loc.name}
             onError={() => setImgError(true)}
             className="h-full w-full object-cover"
             loading="lazy"
@@ -49,7 +37,7 @@ function LocationCard({ loc }: { loc: Location }) {
             <span className="font-display text-3xl font-bold tracking-tight text-ink/70">
               {loc.name}
             </span>
-            <span className="label text-faint">이미지 준비 중</span>
+            <span className="label text-faint">{imgPending}</span>
           </div>
         )}
       </div>
@@ -72,10 +60,28 @@ function LocationCard({ loc }: { loc: Location }) {
 }
 
 export function SeouliteLocations() {
+  const t = useMessages().seoulite;
+  const locations: Location[] = [
+    {
+      name: "CARROT",
+      image: "/space/carrot.png",
+      address: "서울 용산구 한남동 이태원로 268-20",
+      href: "https://www.carrotglobal.com/",
+      description: t.carrotDesc,
+    },
+    {
+      name: "사:유",
+      image: "/space/sayu.png",
+      address: "서울 용산구 신흥로 11, 해방촌",
+      href: "https://centerone.kr/",
+      description: t.sayuDesc,
+    },
+  ];
+
   return (
     <div className="grid gap-10 md:grid-cols-2 md:gap-12">
       {locations.map((loc) => (
-        <LocationCard key={loc.name} loc={loc} />
+        <LocationCard key={loc.name} loc={loc} imgPending={t.imgPending} />
       ))}
     </div>
   );

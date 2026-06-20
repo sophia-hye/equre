@@ -6,18 +6,18 @@ import { getSessionUser, type Profile } from "@/lib/auth/session";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { supabaseConfigured } from "@/lib/supabase/env";
 import { MemberTable, type MemberApp } from "@/components/admin/MemberTable";
+import { getMessages } from "@/lib/i18n/server";
 
 export const metadata: Metadata = { title: "회원 관리" };
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
+  const m = (await getMessages()).admin;
+
   if (!supabaseConfigured) {
     return (
-      <Section>
-        <p className="text-muted">
-          Supabase가 설정되지 않았습니다. <code>.env.local</code> 을 구성한 뒤
-          다시 시도해 주세요.
-        </p>
+      <Section title={m.title}>
+        <p className="text-muted">{m.notConfigured}</p>
       </Section>
     );
   }
@@ -26,8 +26,8 @@ export default async function AdminPage() {
   if (!session) redirect("/login");
   if (session.profile?.role !== "admin") {
     return (
-      <Section>
-        <p className="text-muted">접근 권한이 없습니다. 관리자만 이용할 수 있습니다.</p>
+      <Section title={m.title}>
+        <p className="text-muted">{m.noAccess}</p>
       </Section>
     );
   }
@@ -63,10 +63,10 @@ export default async function AdminPage() {
   return (
     <>
       <PageHero
-        kicker="Admin"
-        index={`${members.length} members`}
-        title="회원 관리"
-        description="가입한 회원을 조회하고 권한을 변경하거나 삭제할 수 있습니다."
+        kicker={m.kicker}
+        index={m.membersCount.replace("{n}", String(members.length))}
+        title={m.title}
+        description={m.desc}
       />
       <section className="py-16 md:py-20">
         <Container>
@@ -77,12 +77,18 @@ export default async function AdminPage() {
   );
 }
 
-function Section({ children }: { children: React.ReactNode }) {
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <section className="py-24">
       <Container>
         <h1 className="font-display text-3xl font-bold tracking-tight">
-          회원 관리
+          {title}
         </h1>
         <div className="mt-6">{children}</div>
       </Container>

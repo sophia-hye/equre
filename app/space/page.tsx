@@ -7,6 +7,7 @@ import { CTASection } from "@/components/ui/CTASection";
 import { IconGlass, IconDevice } from "@/components/ui/icons";
 import { SeouliteLocations } from "@/components/space/SeouliteLocations";
 import { site } from "@/lib/site";
+import { getMessages } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
   title: "Space",
@@ -14,29 +15,30 @@ export const metadata: Metadata = {
     "병원이나 학원이 아닌 힙한 아지트. Sober Bar와 Tech Showroom을 갖춘 SEOULITE HANNAM 프리미엄 웰니스 공간.",
 };
 
-const zones = [
-  {
-    icon: <IconGlass width={26} height={26} />,
-    name: "Sober Bar",
-    desc: "무알콜 음료와 글루텐프리 스낵을 즐기며 대기하는 학부모·선수 전용 휴식 공간. 식음료 수익화와 커뮤니티 체류를 동시에.",
-    tags: ["무알콜 음료", "글루텐프리 스낵", "학부모 라운지"],
-  },
-  {
-    icon: <IconDevice width={26} height={26} />,
-    name: "Tech Showroom",
-    desc: "첨단 스포츠 과학 및 웰니스 멘탈케어 기기를 체험하는 팝업 전시 공간. 하이엔드 브랜드의 B2B 브리핑 무대.",
-    tags: ["스포츠 과학", "웰니스 기기", "B2B 팝업"],
-  },
-];
+export default async function SpacePage() {
+  const m = (await getMessages()).spacePage;
+  const zones = [
+    {
+      icon: <IconGlass width={26} height={26} />,
+      name: m.z1name,
+      desc: m.z1desc,
+      tags: [m.z1t1, m.z1t2, m.z1t3],
+    },
+    {
+      icon: <IconDevice width={26} height={26} />,
+      name: m.z2name,
+      desc: m.z2desc,
+      tags: [m.z2t1, m.z2t2, m.z2t3],
+    },
+  ];
 
-export default function SpacePage() {
   return (
     <>
       <PageHero
         kicker="Space Branding"
         index="C"
-        title="Sober Bar & Showroom"
-        description="“병원이나 학원이 아닌, 힙한 아지트.” 노출 콘크리트와 메탈 소재, 네온 조명으로 스트리트 플래그십 스토어 같은 감각적 만족감과 소속감을 제공합니다."
+        title={m.heroTitle}
+        description={m.heroDesc}
       />
 
       {/* duotone banner */}
@@ -58,7 +60,7 @@ export default function SpacePage() {
           />
           <Container className="relative flex h-full items-end py-8">
             <span className="label text-white/90">
-              {site.location} — 테니스 코트 內 프리미엄 웰니스 공간
+              {site.location} — {m.banner}
             </span>
           </Container>
         </div>
@@ -68,11 +70,7 @@ export default function SpacePage() {
       <section className="border-b border-line-strong py-24 md:py-28">
         <Container>
           <Reveal>
-            <SectionTitle
-              kicker="공간 활용 계획"
-              index="01"
-              title="프리미엄 웰니스 라이프스타일을 직접 체험하는 공간"
-            />
+            <SectionTitle kicker="Space" index="01" title={m.zonesTitle} />
           </Reveal>
           <div className="mt-16 grid border-t border-line-strong md:grid-cols-2 md:divide-x md:divide-line">
             {zones.map((zone, i) => (
@@ -110,7 +108,7 @@ export default function SpacePage() {
               kicker="Location"
               index="02"
               title={site.location}
-              description="테니스 코트 內에 자리한 프리미엄 웰니스 공간. 글로벌 생태계로 확장하는 equre의 플래그십 거점입니다."
+              description={m.locationDesc}
             />
           </Reveal>
           <Reveal delay={150}>
@@ -122,9 +120,9 @@ export default function SpacePage() {
       </section>
 
       <CTASection
-        title="공간이 궁금하신가요?"
-        description="방문 예약과 B2B 팝업·대관 문의를 환영합니다."
-        buttonLabel="방문 / 대관 문의"
+        title={m.ctaTitle}
+        description={m.ctaDesc}
+        buttonLabel={m.ctaBtn}
         buttonHref="/contact"
       />
     </>

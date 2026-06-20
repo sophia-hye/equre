@@ -6,9 +6,12 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { supabaseConfigured } from "@/lib/supabase/env";
 import { authButton, authInput, authLabel, validateEmail } from "./authStyles";
+import { useMessages } from "@/components/i18n/LocaleProvider";
 
 export function LoginForm() {
   const router = useRouter();
+  const t = useMessages().login;
+  const cm = useMessages().common;
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -17,7 +20,7 @@ export function LoginForm() {
     setError("");
 
     if (!supabaseConfigured) {
-      setError("Supabase가 아직 설정되지 않았습니다. (.env.local 확인)");
+      setError(t.notConfigured);
       return;
     }
 
@@ -25,8 +28,8 @@ export function LoginForm() {
     const email = String(data.get("email") ?? "").trim();
     const password = String(data.get("password") ?? "");
 
-    if (!validateEmail(email)) return setError("올바른 이메일을 입력해 주세요.");
-    if (!password) return setError("비밀번호를 입력해 주세요.");
+    if (!validateEmail(email)) return setError(t.errEmail);
+    if (!password) return setError(t.errPassword);
 
     setLoading(true);
     const supabase = createClient();
@@ -37,7 +40,7 @@ export function LoginForm() {
     setLoading(false);
 
     if (err) {
-      setError("이메일 또는 비밀번호가 올바르지 않습니다.");
+      setError(t.errFail);
       return;
     }
     router.push("/");
@@ -48,13 +51,13 @@ export function LoginForm() {
     <form onSubmit={handleSubmit} noValidate className="space-y-5">
       <div>
         <label htmlFor="email" className={authLabel}>
-          이메일
+          {t.email}
         </label>
         <input id="email" name="email" type="email" className={authInput} placeholder="you@example.com" />
       </div>
       <div>
         <label htmlFor="password" className={authLabel}>
-          비밀번호
+          {t.password}
         </label>
         <input id="password" name="password" type="password" className={authInput} placeholder="••••••••" />
       </div>
@@ -62,13 +65,13 @@ export function LoginForm() {
       {error && <p className="text-sm text-alert">{error}</p>}
 
       <button type="submit" disabled={loading} className={authButton}>
-        {loading ? "로그인 중…" : "로그인"}
+        {loading ? t.submitting : t.submit}
       </button>
 
       <p className="pt-2 text-center text-sm text-muted">
-        계정이 없으신가요?{" "}
+        {t.noAccount}{" "}
         <Link href="/signup" className="font-medium text-accent link-underline">
-          회원가입
+          {cm.signup}
         </Link>
       </p>
     </form>
