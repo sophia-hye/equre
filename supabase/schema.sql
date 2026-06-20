@@ -59,13 +59,14 @@ set search_path = public
 as $$
 begin
   insert into public.equre_profiles (
-    id, email, name, contact_type, contact_value, user_type, age_group, gender,
+    id, email, name, phone, contact_type, contact_value, user_type, age_group, gender,
     region, language, interests, referral, marketing_consent
   )
   values (
     new.id,
     new.email,
     coalesce(new.raw_user_meta_data ->> 'name', ''),
+    new.raw_user_meta_data ->> 'phone',
     new.raw_user_meta_data ->> 'contact_type',
     new.raw_user_meta_data ->> 'contact_value',
     new.raw_user_meta_data ->> 'user_type',

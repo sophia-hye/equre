@@ -176,15 +176,11 @@ export function MemberTable({ initialMembers, currentUserId }: Props) {
                 </td>
                 <td className="px-4 py-3 text-muted">{m.email}</td>
                 <td className="px-4 py-3 text-muted">
-                  {m.contact_value ? (
-                    <>
-                      <span className="text-faint">
-                        {m.contact_type || "연락처"}
-                      </span>{" "}
-                      {m.contact_value}
-                    </>
-                  ) : (
-                    m.phone || "—"
+                  <span>{m.phone || "—"}</span>
+                  {m.contact_value && (
+                    <span className="mt-0.5 block text-xs text-faint">
+                      {m.contact_type || "추가"}: {m.contact_value}
+                    </span>
                   )}
                 </td>
                 <td className="px-4 py-3 text-muted">{m.user_type || "—"}</td>

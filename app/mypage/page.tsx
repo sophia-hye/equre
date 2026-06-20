@@ -78,11 +78,12 @@ export default async function MyPage() {
             <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line pt-6 sm:grid-cols-3">
               {[
                 { k: "이메일", v: session.email },
+                { k: "휴대폰", v: session.profile?.phone },
                 {
-                  k: "연락처",
+                  k: "추가 연락처",
                   v: session.profile?.contact_value
                     ? `${session.profile.contact_type ?? ""} ${session.profile.contact_value}`.trim()
-                    : session.profile?.phone,
+                    : null,
                 },
                 { k: "사용자 유형", v: session.profile?.user_type },
                 { k: "연령대", v: session.profile?.age_group },
