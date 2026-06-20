@@ -4,20 +4,22 @@ import { PageHero } from "@/components/ui/PageHero";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { site, getSocialLinks } from "@/lib/site";
 import { IconInstagram, IconKakao } from "@/components/ui/icons";
+import { getMessages } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
   title: "Contact",
   description: "equre 무료 상담 및 B2B 제휴 문의. Are you ready to CURE & GROW?",
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const m = (await getMessages()).contactPage;
   return (
     <>
       <PageHero
         kicker="Contact"
         index="D"
-        title="Are you ready to CURE & GROW?"
-        description="학부모·학생 상담부터 B2B 제휴까지, equre가 가장 완벽한 파트너십을 함께 만들어가겠습니다."
+        title={m.heroTitle}
+        description={m.heroDesc}
       />
 
       <section className="py-20 md:py-24">
@@ -25,10 +27,9 @@ export default function ContactPage() {
           <div className="grid gap-12 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
             {/* Contact info */}
             <div>
-              <p className="label text-muted">문의 안내</p>
+              <p className="label text-muted">{m.guide}</p>
               <p className="mt-5 text-sm leading-relaxed text-muted">
-                아래 양식을 작성해 주시면 담당자가 빠르게 연락드립니다. 급하신
-                경우 이메일로도 문의하실 수 있습니다.
+                {m.guideDesc}
               </p>
               <dl className="mt-10 border-t border-line-strong">
                 {[
@@ -44,7 +45,7 @@ export default function ContactPage() {
               </dl>
 
               {/* 메신저 바로 문의 */}
-              <p className="label mt-10 text-faint">바로 문의</p>
+              <p className="label mt-10 text-faint">{m.directTitle}</p>
               <div className="mt-4 flex flex-col gap-3">
                 {getSocialLinks().map((s) => (
                   <a
@@ -59,9 +60,7 @@ export default function ContactPage() {
                     ) : (
                       <IconKakao width={18} height={18} />
                     )}
-                    {s.type === "instagram"
-                      ? "인스타그램 DM 보내기"
-                      : "카카오톡으로 문의"}
+                    {s.type === "instagram" ? m.igBtn : m.kakaoBtn}
                   </a>
                 ))}
               </div>
