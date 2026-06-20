@@ -93,6 +93,11 @@ export function SignupForm() {
     }));
   }
 
+  // 비밀번호 요건
+  const pwTyped = form.password.length > 0;
+  const pwLenOk = form.password.length >= 8;
+  const pwSpecialOk = /[^A-Za-z0-9]/.test(form.password);
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
@@ -101,8 +106,8 @@ export function SignupForm() {
       return setError("Supabase가 아직 설정되지 않았습니다. (.env.local 확인)");
     if (!form.name.trim()) return setError("이름을 입력해 주세요.");
     if (!validateEmail(form.email)) return setError("올바른 이메일을 입력해 주세요.");
-    if (form.password.length < 8)
-      return setError("비밀번호는 8자 이상이어야 합니다.");
+    if (!pwLenOk || !pwSpecialOk)
+      return setError("비밀번호는 8자 이상이며 특수문자를 포함해야 합니다.");
     if (!form.terms)
       return setError("이용약관 및 개인정보 처리방침에 동의해 주세요.");
 
@@ -243,14 +248,23 @@ export function SignupForm() {
               onChange={(e) => set("email", e.target.value)}
             />
           </Field>
-          <Field label="비밀번호 PASSWORD (8자 이상)">
+          <Field label="비밀번호 PASSWORD">
             <input
               type="password"
               className={authInput}
               placeholder="••••••••"
               value={form.password}
               onChange={(e) => set("password", e.target.value)}
+              aria-invalid={pwTyped && (!pwLenOk || !pwSpecialOk)}
             />
+            <ul className="mt-2 space-y-1">
+              <PwRule ok={pwLenOk} typed={pwTyped} text="8자 이상" />
+              <PwRule
+                ok={pwSpecialOk}
+                typed={pwTyped}
+                text="특수문자 포함 (!@#$%^&* 등)"
+              />
+            </ul>
           </Field>
         </div>
       </section>
@@ -387,6 +401,25 @@ export function SignupForm() {
         </Link>
       </p>
     </form>
+  );
+}
+
+function PwRule({
+  ok,
+  typed,
+  text,
+}: {
+  ok: boolean;
+  typed: boolean;
+  text: string;
+}) {
+  // 입력 전: 연회색 / 충족: 회색 체크 / 미충족(입력 후): 빨강
+  const color = !typed ? "text-faint" : ok ? "text-muted" : "text-alert";
+  return (
+    <li className={`flex items-center gap-1.5 text-xs ${color}`}>
+      <span aria-hidden>{typed && ok ? "✓" : "•"}</span>
+      {text}
+    </li>
   );
 }
 
