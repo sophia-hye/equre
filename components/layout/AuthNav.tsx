@@ -76,7 +76,10 @@ export function AuthNav() {
   }
 
   return (
-    <Link href="/login" className={linkClass}>
+    <Link
+      href="/login"
+      className="whitespace-nowrap border border-line-strong px-3 py-2 text-xs font-medium text-ink transition-colors hover:bg-ink hover:text-bg sm:px-4 sm:py-2.5 sm:text-sm"
+    >
       {m.common.login}
     </Link>
   );

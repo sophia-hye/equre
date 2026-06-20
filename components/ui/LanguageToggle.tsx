@@ -8,22 +8,26 @@ export function LanguageToggle() {
 
   return (
     <div
-      className="flex items-center overflow-hidden border border-line-strong"
+      className="flex items-center gap-1 text-xs font-medium"
       role="group"
       aria-label="Language"
     >
-      {LOCALES.map((l) => (
-        <button
-          key={l}
-          type="button"
-          onClick={() => setLocale(l)}
-          aria-pressed={locale === l}
-          className={`px-2 py-1 text-xs font-semibold transition-colors ${
-            locale === l ? "bg-ink text-bg" : "text-muted hover:text-ink"
-          }`}
-        >
-          {l.toUpperCase()}
-        </button>
+      {LOCALES.map((l, i) => (
+        <span key={l} className="flex items-center">
+          {i > 0 && <span className="mr-1 text-faint/60">/</span>}
+          <button
+            type="button"
+            onClick={() => setLocale(l)}
+            aria-pressed={locale === l}
+            className={`transition-colors ${
+              locale === l
+                ? "text-ink"
+                : "text-faint hover:text-muted"
+            }`}
+          >
+            {l.toUpperCase()}
+          </button>
+        </span>
       ))}
     </div>
   );
