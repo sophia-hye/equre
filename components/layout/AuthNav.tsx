@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { supabaseConfigured } from "@/lib/supabase/env";
@@ -12,7 +11,6 @@ type State =
   | { status: "user"; name: string; isAdmin: boolean };
 
 export function AuthNav() {
-  const router = useRouter();
   const [state, setState] = useState<State>({ status: "loading" });
 
   useEffect(() => {
@@ -47,13 +45,6 @@ export function AuthNav() {
     return () => sub.subscription.unsubscribe();
   }, []);
 
-  async function signOut() {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    router.push("/");
-    router.refresh();
-  }
-
   if (state.status === "loading") {
     return <span className="hidden h-4 w-16 min-[1340px]:block" aria-hidden />;
   }
@@ -75,13 +66,12 @@ export function AuthNav() {
         >
           {state.name}
         </Link>
-        <button
-          type="button"
-          onClick={signOut}
+        <Link
+          href="/logout"
           className="label whitespace-nowrap text-muted transition-colors hover:text-ink"
         >
           로그아웃
-        </button>
+        </Link>
       </div>
     );
   }

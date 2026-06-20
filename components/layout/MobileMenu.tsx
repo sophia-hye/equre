@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { useRouter } from "next/navigation";
 import { nav } from "@/lib/site";
 import { createClient } from "@/lib/supabase/client";
 import { supabaseConfigured } from "@/lib/supabase/env";
@@ -14,7 +13,6 @@ type Auth =
   | { status: "user"; name: string; isAdmin: boolean };
 
 export function MobileMenu() {
-  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -63,14 +61,6 @@ export function MobileMenu() {
     setOpen(false);
     setExpanded(null);
   };
-
-  async function signOut() {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    close();
-    router.push("/");
-    router.refresh();
-  }
 
   const loggedIn = auth.status === "user";
 
@@ -171,9 +161,9 @@ export function MobileMenu() {
                   Admin
                 </Link>
               )}
-              <button type="button" onClick={signOut} className="label text-muted">
+              <Link href="/logout" onClick={close} className="label text-muted">
                 로그아웃
-              </button>
+              </Link>
             </>
           ) : (
             <>
