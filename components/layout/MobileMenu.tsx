@@ -66,7 +66,7 @@ export function MobileMenu() {
   const loggedIn = auth.status === "user";
 
   const overlay = (
-    <div className="fixed inset-0 z-[60] flex flex-col bg-bg min-[1340px]:hidden">
+    <div className="fixed inset-0 z-[60] flex flex-col bg-bg">
       <div className="flex h-16 items-center justify-between border-b border-line-strong px-6">
         <Logo onClick={close} />
         <button
@@ -140,39 +140,16 @@ export function MobileMenu() {
           )
         )}
 
-        <Link
-          href="/contact"
-          onClick={close}
-          className="mt-8 bg-accent px-5 py-4 text-center text-base font-medium text-white"
-        >
-          상담 신청
-        </Link>
-
-        {/* 인증 영역 */}
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-5 pb-8">
+        {/* 추가 링크 (로그인/상담신청/로그아웃은 상단 Navbar에 있음) */}
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-5 pb-8">
           {loggedIn ? (
-            <>
-              <Link href="/mypage" onClick={close} className="label text-muted">
-                마이페이지
-              </Link>
-              {auth.isAdmin && (
-                <Link href="/admin" onClick={close} className="label text-accent">
-                  Admin
-                </Link>
-              )}
-              <Link href="/logout" onClick={close} className="label text-muted">
-                로그아웃
-              </Link>
-            </>
+            <Link href="/mypage" onClick={close} className="label text-muted">
+              마이페이지
+            </Link>
           ) : (
-            <>
-              <Link href="/login" onClick={close} className="label text-muted">
-                로그인
-              </Link>
-              <Link href="/signup" onClick={close} className="label text-muted">
-                회원가입
-              </Link>
-            </>
+            <Link href="/signup" onClick={close} className="label text-muted">
+              회원가입
+            </Link>
           )}
         </div>
       </nav>
@@ -180,7 +157,7 @@ export function MobileMenu() {
   );
 
   return (
-    <div className="min-[1340px]:hidden">
+    <div>
       <button
         type="button"
         onClick={() => setOpen(true)}

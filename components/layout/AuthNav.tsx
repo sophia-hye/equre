@@ -45,31 +45,28 @@ export function AuthNav() {
     return () => sub.subscription.unsubscribe();
   }, []);
 
+  const linkClass =
+    "whitespace-nowrap text-xs font-medium uppercase tracking-wide text-muted transition-colors hover:text-ink sm:text-[0.8rem]";
+
   if (state.status === "loading") {
-    return <span className="hidden h-4 w-16 min-[1340px]:block" aria-hidden />;
+    return <span className="h-4 w-10" aria-hidden />;
   }
 
   if (state.status === "user") {
     return (
-      <div className="hidden items-center gap-4 min-[1340px]:flex">
+      <div className="flex items-center gap-2 sm:gap-3">
         {state.isAdmin && (
           <Link
             href="/admin"
-            className="label whitespace-nowrap text-accent transition-colors hover:text-accent-dim"
+            className="whitespace-nowrap text-xs font-semibold uppercase tracking-wide text-accent transition-colors hover:text-accent-dim sm:text-[0.8rem]"
           >
             Admin
           </Link>
         )}
-        <Link
-          href="/mypage"
-          className="label whitespace-nowrap text-muted transition-colors hover:text-ink"
-        >
+        <Link href="/mypage" className={`hidden ${linkClass} sm:inline`}>
           {state.name}
         </Link>
-        <Link
-          href="/logout"
-          className="label whitespace-nowrap text-muted transition-colors hover:text-ink"
-        >
+        <Link href="/logout" className={linkClass}>
           로그아웃
         </Link>
       </div>
@@ -77,19 +74,8 @@ export function AuthNav() {
   }
 
   return (
-    <div className="hidden items-center gap-4 min-[1340px]:flex">
-      <Link
-        href="/login"
-        className="label whitespace-nowrap text-muted transition-colors hover:text-ink"
-      >
-        로그인
-      </Link>
-      <Link
-        href="/signup"
-        className="label whitespace-nowrap text-muted transition-colors hover:text-ink"
-      >
-        회원가입
-      </Link>
-    </div>
+    <Link href="/login" className={linkClass}>
+      로그인
+    </Link>
   );
 }
