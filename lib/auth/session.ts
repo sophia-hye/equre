@@ -9,6 +9,8 @@ export type Profile = {
   name: string | null;
   role: "admin" | "user";
   phone: string | null;
+  contact_type: string | null;
+  contact_value: string | null;
   user_type: string | null;
   age_group: string | null;
   gender: string | null;

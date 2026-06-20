@@ -36,7 +36,7 @@ export default async function AdminPage() {
   const { data } = await admin
     .from("equre_profiles")
     .select(
-      "id, email, name, role, phone, user_type, age_group, gender, region, language, interests, referral, marketing_consent, created_at"
+      "id, email, name, role, phone, contact_type, contact_value, user_type, age_group, gender, region, language, interests, referral, marketing_consent, created_at"
     )
     .order("created_at", { ascending: false });
 

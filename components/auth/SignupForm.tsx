@@ -8,6 +8,8 @@ import { supabaseConfigured } from "@/lib/supabase/env";
 import { authInput, authLabel, validateEmail } from "./authStyles";
 import {
   AGE_GROUPS,
+  CONTACT_PLACEHOLDER,
+  CONTACT_TYPES,
   GENDERS,
   INTERESTS,
   LANGUAGES,
@@ -19,6 +21,8 @@ import {
 type Form = {
   name: string;
   phone: string;
+  contact_type: string;
+  contact_value: string;
   email: string;
   password: string;
   user_type: string;
@@ -35,6 +39,8 @@ type Form = {
 const EMPTY: Form = {
   name: "",
   phone: "",
+  contact_type: "",
+  contact_value: "",
   email: "",
   password: "",
   user_type: "",
@@ -105,6 +111,8 @@ export function SignupForm() {
     if (!supabaseConfigured)
       return setError("Supabase가 아직 설정되지 않았습니다. (.env.local 확인)");
     if (!form.name.trim()) return setError("이름을 입력해 주세요.");
+    if (form.phone.replace(/\D/g, "").length < 7)
+      return setError("휴대폰 번호를 입력해 주세요. (해외 번호는 국가번호 포함)");
     if (!validateEmail(form.email)) return setError("올바른 이메일을 입력해 주세요.");
     if (!pwLenOk || !pwSpecialOk)
       return setError("비밀번호는 8자 이상이며 특수문자를 포함해야 합니다.");
@@ -120,6 +128,8 @@ export function SignupForm() {
         data: {
           name: form.name.trim(),
           phone: form.phone.trim(),
+          contact_type: form.contact_type,
+          contact_value: form.contact_value.trim(),
           user_type: form.user_type,
           age_group: form.age_group,
           gender: form.gender,
@@ -231,13 +241,16 @@ export function SignupForm() {
               onChange={(e) => set("name", e.target.value)}
             />
           </Field>
-          <Field label="휴대폰 PHONE (선택)" half>
+          <Field label="휴대폰 PHONE" half>
             <input
               className={authInput}
-              placeholder="010-0000-0000"
+              placeholder="+82 10-1234-5678"
               value={form.phone}
               onChange={(e) => set("phone", e.target.value)}
             />
+            <p className="mt-1.5 text-xs text-faint">
+              해외 번호는 국가번호(+1 등)를 포함해 주세요.
+            </p>
           </Field>
           <Field label="이메일 EMAIL">
             <input
@@ -265,6 +278,27 @@ export function SignupForm() {
                 text="특수문자 포함 (!@#$%^&* 등)"
               />
             </ul>
+          </Field>
+
+          <Field label="추가 연락 수단 (선택)" half>
+            <Select
+              value={form.contact_type}
+              onChange={(v) => set("contact_type", v)}
+              options={CONTACT_TYPES.filter((t) => t !== "휴대폰")}
+              placeholder="선택 안 함"
+            />
+          </Field>
+          <Field label="추가 연락처 (선택)" half>
+            <input
+              className={authInput}
+              placeholder={
+                form.contact_type
+                  ? CONTACT_PLACEHOLDER[form.contact_type] ?? ""
+                  : "예) @instagram_id"
+              }
+              value={form.contact_value}
+              onChange={(e) => set("contact_value", e.target.value)}
+            />
           </Field>
         </div>
       </section>
