@@ -55,30 +55,30 @@ export function AuthNav() {
   }
 
   if (state.status === "loading") {
-    return <span className="hidden h-4 w-16 md:block" aria-hidden />;
+    return <span className="hidden h-4 w-16 min-[1180px]:block" aria-hidden />;
   }
 
   if (state.status === "user") {
     return (
-      <div className="hidden items-center gap-4 md:flex">
+      <div className="hidden items-center gap-4 min-[1180px]:flex">
         {state.isAdmin && (
           <Link
             href="/admin"
-            className="label text-accent transition-colors hover:text-accent-dim"
+            className="label whitespace-nowrap text-accent transition-colors hover:text-accent-dim"
           >
             Admin
           </Link>
         )}
         <Link
           href="/mypage"
-          className="label text-muted transition-colors hover:text-ink"
+          className="label whitespace-nowrap text-muted transition-colors hover:text-ink"
         >
           {state.name}
         </Link>
         <button
           type="button"
           onClick={signOut}
-          className="label text-muted transition-colors hover:text-ink"
+          className="label whitespace-nowrap text-muted transition-colors hover:text-ink"
         >
           로그아웃
         </button>
@@ -87,16 +87,16 @@ export function AuthNav() {
   }
 
   return (
-    <div className="hidden items-center gap-4 md:flex">
+    <div className="hidden items-center gap-4 min-[1180px]:flex">
       <Link
         href="/login"
-        className="label text-muted transition-colors hover:text-ink"
+        className="label whitespace-nowrap text-muted transition-colors hover:text-ink"
       >
         로그인
       </Link>
       <Link
         href="/signup"
-        className="label text-muted transition-colors hover:text-ink"
+        className="label whitespace-nowrap text-muted transition-colors hover:text-ink"
       >
         회원가입
       </Link>

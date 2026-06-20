@@ -8,6 +8,7 @@ import { nav } from "@/lib/site";
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => setMounted(true), []);
 
@@ -18,11 +19,13 @@ export function MobileMenu() {
     };
   }, [open]);
 
-  const close = () => setOpen(false);
+  const close = () => {
+    setOpen(false);
+    setExpanded(null);
+  };
 
   const overlay = (
-    <div className="fixed inset-0 z-[60] flex flex-col bg-bg md:hidden">
-      {/* top bar inside overlay (so header backdrop-blur 영향 없이 불투명) */}
+    <div className="fixed inset-0 z-[60] flex flex-col bg-bg min-[1180px]:hidden">
       <div className="flex h-16 items-center justify-between border-b border-line-strong px-6">
         <span className="font-display text-[1.7rem] font-bold lowercase leading-none tracking-tight text-ink">
           eq&uuml;re
@@ -37,20 +40,51 @@ export function MobileMenu() {
         </button>
       </div>
 
-      <nav className="flex flex-1 flex-col overflow-y-auto px-6 py-4">
-        {nav.map((item, i) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            onClick={close}
-            className="flex items-baseline justify-between border-b border-line py-5 font-display text-3xl font-bold text-ink"
-          >
-            {item.label}
-            <span className="index-num text-base">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-          </Link>
-        ))}
+      <nav className="flex flex-1 flex-col overflow-y-auto px-6 py-2">
+        {nav.map((item) =>
+          item.children ? (
+            <div key={item.label} className="border-b border-line">
+              <button
+                type="button"
+                onClick={() =>
+                  setExpanded((cur) => (cur === item.label ? null : item.label))
+                }
+                aria-expanded={expanded === item.label}
+                className="flex w-full items-center justify-between py-4 text-left text-base font-bold uppercase tracking-wide text-ink"
+              >
+                {item.label}
+                <span className="text-xl leading-none text-accent">
+                  {expanded === item.label ? "−" : "+"}
+                </span>
+              </button>
+              {expanded === item.label && (
+                <ul className="pb-3">
+                  {item.children.map((c) => (
+                    <li key={c.href}>
+                      <Link
+                        href={c.href}
+                        onClick={close}
+                        className="block py-2.5 pl-1 text-sm text-muted transition-colors hover:text-ink"
+                      >
+                        {c.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ) : (
+            <Link
+              key={item.href}
+              href={item.href!}
+              onClick={close}
+              className="border-b border-line py-4 text-base font-bold uppercase tracking-wide text-ink"
+            >
+              {item.label}
+            </Link>
+          )
+        )}
+
         <Link
           href="/contact"
           onClick={close}
@@ -58,7 +92,7 @@ export function MobileMenu() {
         >
           상담 신청
         </Link>
-        <div className="mt-6 flex justify-center gap-6">
+        <div className="mt-6 flex justify-center gap-6 pb-8">
           <Link href="/login" onClick={close} className="label text-muted">
             로그인
           </Link>
@@ -74,11 +108,11 @@ export function MobileMenu() {
   );
 
   return (
-    <div className="md:hidden">
+    <div className="min-[1180px]:hidden">
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-label={open ? "메뉴 닫기" : "메뉴 열기"}
+        onClick={() => setOpen(true)}
+        aria-label="메뉴 열기"
         aria-expanded={open}
         className="flex h-10 w-10 items-center justify-center border border-line-strong text-ink"
       >
