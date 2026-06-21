@@ -11,6 +11,19 @@ export function StudioHome({ m }: { m: Studio }) {
 
   return (
     <div className="studio-home" id="top">
+      {/* TOP POSTER */}
+      <section className="poster-hero">
+        <div className="wrap">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/home-poster.png"
+            alt="eqüre — The Way Maker. Pave the Way, Light the Life."
+            width={3240}
+            height={3240}
+          />
+        </div>
+      </section>
+
       {/* HERO */}
       <section className="hero">
         <div className="wrap">
