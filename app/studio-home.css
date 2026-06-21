@@ -39,6 +39,13 @@
   text-transform: uppercase;
 }
 
+/* top poster (brand key visual) */
+.studio-home .poster-hero { padding: 48px 0 8px; }
+.studio-home .poster-hero img {
+  display: block; width: 100%; max-width: 880px; height: auto;
+  margin: 0 auto;
+}
+
 /* hero */
 .studio-home .hero { position: relative; padding: 88px 0 72px; }
 .studio-home .hero .topline {
