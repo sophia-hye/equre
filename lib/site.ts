@@ -42,6 +42,37 @@ export function getSocialLinks(): SocialLink[] {
 export type NavChild = { label: string; href: string; desc?: string };
 export type NavItem = { label: string; href?: string; children?: NavChild[] };
 
+/** 헤더에 노출되는 기본 네비게이션 (4개). */
+export const primaryNav: NavItem[] = [
+  { label: "About", href: "/about" },
+  { label: "Divisions", href: "/divisions" },
+  { label: "Consultation", href: "/#contact" },
+  { label: "Contact", href: "/contact" },
+];
+
+/** Education Mentoring 사업부 페이지 상단 sub navbar. */
+export const educationSubNav: NavItem[] = [
+  { label: "Program", href: "/programs" },
+  { label: "Space", href: "/space" },
+  {
+    label: "Board",
+    children: [
+      { label: "Gallery", href: "/news/media" },
+      { label: "News", href: "/news/press" },
+      { label: "Events", href: "/news/events" },
+    ],
+  },
+  { label: "Membership", href: "/private-membership" },
+  {
+    label: "Profile",
+    children: [{ label: "Team", href: "/team" }],
+  },
+];
+
+/** Business Consulting 사업부 sub navbar (메뉴 미확정 — 우선 Program 하나만 노출). */
+export const businessSubNav: NavItem[] = [{ label: "Program", href: "/programs" }];
+
+/** [ARCHIVED] 전체 메뉴 — 현재 헤더에 노출하지 않음. 추후 복원용으로 보관. */
 export const nav: NavItem[] = [
   { label: "Program", href: "/programs" },
   { label: "Space", href: "/space" },
