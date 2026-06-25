@@ -120,7 +120,6 @@ export const OPTION_EN: Record<string, string> = {
   "유튜브": "YouTube",
   // contact types
   "휴대폰": "Phone",
-  "인스타그램 ID": "Instagram",
   "카카오톡 ID": "KakaoTalk ID",
   "이메일(다른)": "Email (other)",
 };

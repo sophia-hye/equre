@@ -1,7 +1,7 @@
-# equre 웹사이트 기획안
+# eqüre 웹사이트 기획안
 
 > The Next Generation Wellness Education
-> 주식회사 equre | 이큐어 교육성장연구소 (ETERNITY COMPANY)
+> eqüre
 
 문서 버전: v1.0 / 작성일: 2026-06-06
 출처: eqüre Final Pitch Deck 2026 (8p) 기반
@@ -14,8 +14,8 @@
 
 | 항목 | 내용 |
 |------|------|
-| 브랜드명 | equre (이큐어) |
-| 법인 | 주식회사 equre / 이큐어 교육성장연구소 (ETERNITY COMPANY) |
+| 브랜드명 | eqüre (이큐어) |
+| 법인 | eqüre |
 | 카테고리 | 차세대 웰니스 교육 (Wellness Education) |
 | 한 줄 정의 | 입시 컨설팅과 멘탈 케어를 혁신하는 글로벌 하이브리드 허브 |
 | 슬로건 | The Next Generation Wellness Education |
@@ -34,7 +34,7 @@
 ### 1.3 비즈니스 본질
 
 아이들이 실패를 딛고 글로벌 웰니스 리더로 자립할 수 있도록 돕는 것.
-이것이 equre가 창출하는 **사회적 기업의 본질적 가치**이며,
+이것이 eqüre가 창출하는 **사회적 기업의 본질적 가치**이며,
 재단/투자자에게는 "미래 세대를 위한 가장 단단한 심리적 인프라"에 대한 투자다.
 
 ---
@@ -47,14 +47,14 @@
 | Primary | 학부모 | 자녀의 플랜 B, 멘탈 케어, 검증된 컨설팅 | 신뢰 확인, 상담/문의, 커뮤니티 |
 | Secondary | B2B 파트너 | 팝업 공간, 제품 브리핑, 스폰서십 | 제휴 제안, 공간 대여 문의 |
 | Secondary | 재단/투자자 | 사회적 임팩트, 사업 모델 검증 | IR/임팩트 리포트 열람 |
-| Tertiary | equre 크루(Crew)/피어 멘토 지원자 | 커뮤니티 소속, 앰배서더 활동 | 지원/가입 |
+| Tertiary | eqüre 크루(Crew)/피어 멘토 지원자 | 커뮤니티 소속, 앰배서더 활동 | 지원/가입 |
 
 ---
 
 ## 3. 정보 구조 (IA / Sitemap)
 
 ```
-equre.com
+equre.us
 ├─ Home (메인)
 ├─ About (브랜드 스토리)
 │   ├─ The Problem (왜 플랜 B인가)
@@ -69,7 +69,7 @@ equre.com
 │   ├─ Sober Bar (무알콜 음료 / 글루텐프리 스낵)
 │   ├─ Tech Showroom (스포츠 과학 · 웰니스 기기)
 │   └─ SEOULITE HANNAM (플래그십 / 위치)
-├─ Community (equre Crew)
+├─ Community (eqüre Crew)
 │   ├─ 크루 소개 & 페스티벌 앰배서더
 │   └─ 성장 스토리 (선순환 구조)
 ├─ Partners / B2B

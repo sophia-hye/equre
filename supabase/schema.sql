@@ -1,5 +1,5 @@
 -- ============================================================
--- equre — Supabase schema
+-- eqüre — Supabase schema
 -- Supabase 대시보드 > SQL Editor 에 붙여넣고 실행하세요.
 -- (모든 테이블은 equre_ 접두어 사용)
 -- ============================================================
@@ -122,4 +122,4 @@ create policy "update own application"
 -- 4) 관리자 지정 (회원가입 후 1회 실행)
 --    아래 이메일을 본인 관리자 계정으로 바꾼 뒤 실행하세요.
 -- ============================================================
--- update public.equre_profiles set role = 'admin' where email = 'admin@equre.com';
+-- update public.equre_profiles set role = 'admin' where email = 'admin@equre.us';

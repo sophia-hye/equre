@@ -24,7 +24,7 @@ export function LibrarySection() {
             kicker="The eqüre Library"
             index="07"
             title="우리가 다루는 이야기, 한 권의 서가로"
-            description="입시 데이터부터 번아웃 회복, 피어 멘토링까지 — equre가 청소년과 함께 써 내려가는 주제들을 한 권의 책처럼 모았습니다."
+            description="입시 데이터부터 번아웃 회복, 피어 멘토링까지 — eqüre가 청소년과 함께 써 내려가는 주제들을 한 권의 책처럼 모았습니다."
           />
         </Reveal>
 

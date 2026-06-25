@@ -8,7 +8,7 @@ import { getMessages } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "equre 무료 상담 및 B2B 제휴 문의. Are you ready to CURE & GROW?",
+  description: "eqüre 무료 상담 및 B2B 제휴 문의. Are you ready to CURE & GROW?",
 };
 
 export default async function ContactPage() {

@@ -10,7 +10,7 @@ import { getMessages } from "@/lib/i18n/server";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "equre는 이성(데이터)과 감성(치유)을 결합해 엘리트 청소년을 위한 사회적 안전망을 만듭니다.",
+    "eqüre는 이성(데이터)과 감성(치유)을 결합해 엘리트 청소년을 위한 사회적 안전망을 만듭니다.",
 };
 
 export default async function AboutPage() {

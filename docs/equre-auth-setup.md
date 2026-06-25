@@ -1,4 +1,4 @@
-# equre 인증/관리자 설정 가이드 (Supabase)
+# eqüre 인증/관리자 설정 가이드 (Supabase)
 
 로그인 · 회원가입 · 관리자 회원관리는 **Supabase**(PostgreSQL + Auth)로 동작합니다.
 아래 4단계를 따라 키를 넣고 SQL을 실행하면 바로 작동합니다.

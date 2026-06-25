@@ -1,4 +1,4 @@
-# equre 디자인 토큰
+# eqüre 디자인 토큰
 
 > 기반: [equre-website-plan.md](equre-website-plan.md) · [equre-wireframe.md](equre-wireframe.md)
 > 구현 위치: `app/globals.css` (Tailwind v4 `@theme`)
