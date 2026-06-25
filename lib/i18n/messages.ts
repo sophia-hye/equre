@@ -28,7 +28,7 @@ export const messages = {
       linkAdmissions: "입시 & 멘탈",
       linkPeer: "피어 멘토링",
       b2bInquiry: "B2B 문의",
-      legal: "eqüre",
+      legal: "Eqüre Inc. | Global Education Mentoring & Strategic Business Advisory",
     },
     hero: {
       tag: "( eqüre )",
@@ -170,6 +170,11 @@ export const messages = {
       ctaTitle2: "cure & grow?",
       ctaP: "미래를 선택하든, 미래를 만들든 — 다음 걸음은 대화에서 시작됩니다.",
       ctaBtn: "디스커버리 콜 예약 →",
+      p1cta: "Education Mentoring 둘러보기",
+      p2cta: "Business Consulting 둘러보기",
+      plansTitle: "사업 부문",
+      plansLede: "학생에게는 자신의 길을, 기업에게는 단단한 발판을 — 두 갈래의 성장을 함께 설계합니다.",
+      plansDesc: "eqüre는 하나의 멘토링 철학을 두 영역에 적용합니다. 전환점에 선 학생에게는 입시 전략과 멘탈 케어를, 성장 단계의 기업에게는 자본·시장진입·브랜드 전략을 — 언제나 데이터(E)와 케어(Q)를 함께 담아 설계합니다.",
     },
     comingSoon: {
       heroDesc: "해당 페이지는 현재 준비 중입니다. 곧 새로운 콘텐츠로 찾아뵙겠습니다.",
@@ -491,7 +496,7 @@ export const messages = {
       linkAdmissions: "Admissions & Mental Care",
       linkPeer: "Peer Mentoring",
       b2bInquiry: "B2B Inquiry",
-      legal: "eqüre",
+      legal: "Eqüre Inc. | Global Education Mentoring & Strategic Business Advisory",
     },
     hero: {
       tag: "( eqüre )",
@@ -633,6 +638,11 @@ export const messages = {
       ctaTitle2: "cure & grow?",
       ctaP: "Whether you're choosing a future or building one, the next step starts with a conversation.",
       ctaBtn: "Book a discovery call →",
+      p1cta: "Explore Education Mentoring",
+      p2cta: "Explore Business Consulting",
+      plansTitle: "Divisions",
+      plansLede: "A path for students, a footing for ventures — two tracks of growth, designed with you.",
+      plansDesc: "eqüre applies one mentoring philosophy across two fields. Admissions strategy and mental care for students at a turning point; capital, market entry, and brand strategy for ventures in growth — every roadmap blends data (E) with care (Q).",
     },
     comingSoon: {
       heroDesc: "This page is currently being prepared. We'll be back soon with new content.",
