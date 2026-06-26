@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
@@ -70,6 +71,14 @@ export default async function AdminPage() {
       />
       <section className="py-16 md:py-20">
         <Container>
+          <div className="mb-8 flex flex-wrap gap-3">
+            <Link
+              href="/admin/board"
+              className="border border-line-strong px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-ink hover:text-bg"
+            >
+              Board 관리 (갤러리·뉴스·이벤트) →
+            </Link>
+          </div>
           <MemberTable initialMembers={members} currentUserId={session.id} />
         </Container>
       </section>
