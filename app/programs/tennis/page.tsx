@@ -20,7 +20,12 @@ export default async function Page() {
         title="Tennis"
         description={m.tennisDesc}
       />
-      <TracksSection title={m.tracksTitle} desc={m.tracksDesc} tracks={m.tracks} />
+      <TracksSection
+        title={m.tracksTitle}
+        desc={m.tracksDesc}
+        tracks={m.tracks}
+        basePath="/programs/tennis"
+      />
       <CTASection
         title={m.ctaTitle}
         description={m.ctaDesc}
