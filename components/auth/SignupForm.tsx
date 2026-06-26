@@ -138,6 +138,7 @@ export function SignupForm() {
           interests: form.interests,
           referral: form.referral,
           marketing_consent: form.marketing_consent,
+          source: "equre",
         },
       },
     });
