@@ -1,28 +1,55 @@
+import "@/app/studio-home.css";
 import type { Metadata } from "next";
-import { SubNav } from "@/components/layout/SubNav";
-import { DivisionDetail } from "@/components/divisions/DivisionDetail";
-import { educationSubNav } from "@/lib/site";
+import { EducationCategories } from "@/components/divisions/EducationCategories";
+import { StudioCta } from "@/components/home/StudioCta";
+import { RevealInit } from "@/components/home/RevealInit";
 import { getMessages } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
   title: "Education Mentoring",
   description:
-    "eqüre Education Mentoring — 입시 컨설팅과 멘탈 케어를 결합한 차세대 멘토링.",
+    "eqüre Education Mentoring — Tennis·Art 두 분야, 각 분야 Discovery부터 Elite까지 5가지 트랙.",
 };
 
 export default async function Page() {
-  const m = (await getMessages()).studio;
+  const msgs = await getMessages();
+  const m = msgs.studio;
+  const p = msgs.programsPage;
+
+  const cats = [
+    { label: "Tennis", sub: p.tennisSub, desc: p.tennisDesc, href: "/programs/tennis" },
+    { label: "Art", sub: p.artSub, desc: p.artDesc, href: "/programs/art" },
+  ];
+  const trackNames = p.tracks.map((t) => t.title);
+
   return (
     <>
-      <SubNav title={m.p1h3} items={educationSubNav} />
-      <DivisionDetail
-        m={m}
-        pn={m.p1pn}
-        h3={m.p1h3}
-        kr={m.p1kr}
-        blurb={m.p1blurb}
-        rows={m.p1rows}
-      />
+      <div className="studio-home" id="top">
+        <section className="plans">
+          <div className="wrap">
+            <div className="plans-head reveal">
+              <p className="eyebrow">{m.p1pn}</p>
+              <h2 className="plans-title">{m.p1h3}</h2>
+              <p className="detail-kr">{m.p1kr}</p>
+              <p
+                className="plans-lede"
+                dangerouslySetInnerHTML={{ __html: m.p1blurb }}
+              />
+            </div>
+          </div>
+        </section>
+
+        <EducationCategories
+          title={p.catTitle}
+          desc={p.catDesc}
+          ctaLabel={p.catCta}
+          cats={cats}
+          trackNames={trackNames}
+        />
+
+        <StudioCta m={m} />
+        <RevealInit />
+      </div>
     </>
   );
 }
