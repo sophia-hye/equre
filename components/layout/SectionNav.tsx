@@ -17,6 +17,7 @@ const EDUCATION_PREFIXES = [
   "/board",
   "/news",
   "/private-membership",
+  "/profile",
   "/team",
 ];
 

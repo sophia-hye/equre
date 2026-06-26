@@ -57,6 +57,11 @@ export const boardItems: NavChild[] = [
   { label: "Events", href: "/news/events", desc: "Events & happenings" },
 ];
 
+/** Profile 하위 항목 — sub navbar 드롭다운과 /profile 랜딩 카드에서 공용 사용. */
+export const profileItems: NavChild[] = [
+  { label: "Team", href: "/team", desc: "Team & mentors" },
+];
+
 /** Education Mentoring 사업부 페이지 상단 sub navbar. */
 export const educationSubNav: NavItem[] = [
   {
@@ -70,10 +75,7 @@ export const educationSubNav: NavItem[] = [
   { label: "Space", href: "/space" },
   { label: "Board", href: "/board", children: boardItems },
   { label: "Membership", href: "/private-membership" },
-  {
-    label: "Profile",
-    children: [{ label: "Team", href: "/team" }],
-  },
+  { label: "Profile", href: "/profile", children: profileItems },
 ];
 
 /** Business Consulting 사업부 sub navbar (메뉴 미확정 — 우선 Program 하나만 노출). */
