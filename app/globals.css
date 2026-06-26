@@ -61,8 +61,10 @@ body::before {
 }
 
 /* lift page content above the grain — scoped to layout elements only,
-   so portaled overlays (e.g. mobile menu) keep their own positioning */
-body > header,
+   so portaled overlays (e.g. mobile menu) keep their own positioning.
+   NOTE: header is excluded so its `position: sticky` (a layered utility) is
+   not overridden by this unlayered rule; the header already sits above the
+   grain via its own high z-index (z-50). */
 body > main,
 body > footer {
   position: relative;
