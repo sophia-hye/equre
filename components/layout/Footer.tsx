@@ -28,6 +28,14 @@ export async function Footer() {
       links: [
         { label: "About", href: "/about" },
         { label: "Brand Identity", href: "/about" },
+        { label: "Resources", href: "/resources" },
+      ],
+    },
+    {
+      title: "Governance",
+      links: [
+        { label: "Management", href: "/governance/management" },
+        { label: "Board of Directors", href: "/governance/board" },
       ],
     },
     {
@@ -42,7 +50,7 @@ export async function Footer() {
   return (
     <footer className="border-t border-line-strong bg-bg">
       <Container>
-        <div className="grid gap-10 py-14 md:grid-cols-[1.4fr_repeat(4,1fr)]">
+        <div className="grid gap-10 py-14 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-[1.4fr_repeat(5,1fr)]">
           <div>
             <p className="label text-ink">The Next Generation</p>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">

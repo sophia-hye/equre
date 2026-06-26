@@ -42,6 +42,54 @@ export function getSocialLinks(): SocialLink[] {
 export type NavChild = { label: string; href: string; desc?: string };
 export type NavItem = { label: string; href?: string; children?: NavChild[] };
 
+/** 헤더에 노출되는 기본 네비게이션 (4개). */
+export const primaryNav: NavItem[] = [
+  { label: "About", href: "/about" },
+  { label: "Divisions", href: "/divisions" },
+  { label: "Consultation", href: "/#contact" },
+  { label: "Contact", href: "/contact" },
+];
+
+/** Board(소식) 하위 항목 — sub navbar 드롭다운과 /board 랜딩 카드에서 공용 사용. */
+export const boardItems: NavChild[] = [
+  { label: "Gallery", href: "/news/media", desc: "Media & gallery" },
+  { label: "News", href: "/news/press", desc: "Press releases" },
+  { label: "Events", href: "/news/events", desc: "Events & happenings" },
+];
+
+/** Profile 하위 항목 — sub navbar 드롭다운과 /profile 랜딩 카드에서 공용 사용. */
+export const profileItems: NavChild[] = [
+  { label: "Team", href: "/team", desc: "Team & mentors" },
+];
+
+/** Education Mentoring 사업부 페이지 상단 sub navbar. */
+export const educationSubNav: NavItem[] = [
+  {
+    label: "Program",
+    href: "/programs",
+    children: [
+      { label: "Tennis", href: "/programs/tennis" },
+      { label: "Art", href: "/programs/art" },
+    ],
+  },
+  { label: "Space", href: "/space" },
+  { label: "Board", href: "/board", children: boardItems },
+  { label: "Membership", href: "/private-membership" },
+  { label: "Profile", href: "/profile", children: profileItems },
+];
+
+/** Business Consulting 사업부 sub navbar (메뉴 미확정 — 우선 Program 하나만 노출). */
+export const businessSubNav: NavItem[] = [{ label: "Program", href: "/programs" }];
+
+/** 사업부 목록 — sub navbar 셀렉트박스로 페이지 전환에 사용. */
+export const divisions = [
+  { key: "education", label: "Education Mentoring", href: "/divisions/education" },
+  { key: "business", label: "Business Consulting", href: "/divisions/business" },
+] as const;
+
+export type DivisionKey = (typeof divisions)[number]["key"];
+
+/** [ARCHIVED] 전체 메뉴 — 현재 헤더에 노출하지 않음. 추후 복원용으로 보관. */
 export const nav: NavItem[] = [
   { label: "Program", href: "/programs" },
   { label: "Space", href: "/space" },

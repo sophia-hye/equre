@@ -41,7 +41,7 @@ export function MobileMenu() {
         .from("equre_profiles")
         .select("name, role")
         .eq("id", user.id)
-        .single();
+        .maybeSingle();
       setAuth({
         status: "user",
         name: profile?.name || user.email || "회원",
@@ -49,7 +49,11 @@ export function MobileMenu() {
       });
     };
     load();
-    const { data: sub } = supabase.auth.onAuthStateChange(() => load());
+    // onAuthStateChange 콜백 안에서 auth 호출 시 navigator.locks 데드락 →
+    // 락 밖에서 실행되도록 지연.
+    const { data: sub } = supabase.auth.onAuthStateChange(() => {
+      setTimeout(() => load(), 0);
+    });
     return () => sub.subscription.unsubscribe();
   }, []);
 

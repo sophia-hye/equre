@@ -34,7 +34,7 @@ export function AuthNav() {
         .from("equre_profiles")
         .select("name, role")
         .eq("id", user.id)
-        .single();
+        .maybeSingle();
       setState({
         status: "user",
         name: profile?.name || user.email || "회원",
@@ -43,7 +43,12 @@ export function AuthNav() {
     };
 
     load();
-    const { data: sub } = supabase.auth.onAuthStateChange(() => load());
+    // onAuthStateChange 콜백 안에서 getUser 등 auth 호출을 바로 하면
+    // navigator.locks 재진입 데드락(signUp/signIn 멈춤)이 발생한다. 락 밖에서
+    // 돌도록 setTimeout 으로 지연시킨다.
+    const { data: sub } = supabase.auth.onAuthStateChange(() => {
+      setTimeout(() => load(), 0);
+    });
     return () => sub.subscription.unsubscribe();
   }, []);
 

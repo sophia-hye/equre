@@ -61,12 +61,25 @@ body::before {
 }
 
 /* lift page content above the grain — scoped to layout elements only,
-   so portaled overlays (e.g. mobile menu) keep their own positioning */
-body > header,
+   so portaled overlays (e.g. mobile menu) keep their own positioning.
+   NOTE: header is excluded so its `position: sticky` (a layered utility) is
+   not overridden by this unlayered rule; the header already sits above the
+   grain via its own high z-index (z-50). */
 body > main,
 body > footer {
   position: relative;
   z-index: 2;
+}
+
+/* 스크롤은 유지하되 스크롤바는 숨김 (모바일 sub navbar 가로 스크롤) */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 /* ── Typography helpers ──────────────────────────────────── */

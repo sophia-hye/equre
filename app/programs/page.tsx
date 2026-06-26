@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionTitle } from "@/components/ui/SectionTitle";
@@ -6,28 +7,19 @@ import { ProcessSteps } from "@/components/ui/ProcessSteps";
 import { Reveal } from "@/components/ui/Reveal";
 import { CTASection } from "@/components/ui/CTASection";
 import { MemberGate } from "@/components/MemberGate";
-import { IconRoute, IconPulseHeart } from "@/components/ui/icons";
 import { getMessages } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
   title: "Programs",
   description:
-    "북미 입학사정관 데이터 기반 입시 로드맵과 심리 치유를 결합한 프리미엄 컨설팅, 글로벌 피어 멘토링.",
+    "Tennis·Art 두 분야, 각 분야 Discovery부터 Elite까지 5가지 트랙. 입시 전략과 멘탈 케어를 결합한 eqüre 프로그램.",
 };
 
 export default async function ProgramsPage() {
   const m = (await getMessages()).programsPage;
-  const coreCards = [
-    {
-      icon: <IconRoute width={24} height={24} />,
-      title: m.c1t,
-      points: [m.c1p1, m.c1p2, m.c1p3],
-    },
-    {
-      icon: <IconPulseHeart width={24} height={24} />,
-      title: m.c2t,
-      points: [m.c2p1, m.c2p2, m.c2p3],
-    },
+  const disciplines = [
+    { label: "Tennis", sub: m.tennisSub, desc: m.tennisDesc, href: "/programs/tennis" },
+    { label: "Art", sub: m.artSub, desc: m.artDesc, href: "/programs/art" },
   ];
   const mentorSteps = [
     { label: m.st1t, caption: m.st1c },
@@ -44,37 +36,55 @@ export default async function ProgramsPage() {
         description={m.heroDesc}
       />
 
-      {/* Core */}
+      {/* By discipline */}
       <section className="border-b border-line-strong py-24 md:py-28">
         <Container>
           <Reveal>
             <SectionTitle
-              kicker="Core"
+              kicker="By Discipline"
               index="01"
-              title={m.coreTitle}
-              description={m.coreDesc}
+              title={m.catTitle}
+              description={m.catDesc}
             />
           </Reveal>
-          <div className="mt-16 grid gap-x-10 gap-y-12 md:grid-cols-2">
-            {coreCards.map((card, i) => (
-              <Reveal key={card.title} delay={i * 100}>
-                <div className="border-t border-line-strong pt-7">
-                  <div className="text-accent">{card.icon}</div>
-                  <h3 className="mt-6 font-display text-2xl font-bold tracking-tight">
-                    {card.title}
+          <div className="mt-16 grid gap-6 md:grid-cols-2">
+            {disciplines.map((d, i) => (
+              <Reveal key={d.href} delay={i * 100}>
+                <Link
+                  href={d.href}
+                  className="group flex h-full flex-col border border-line-strong p-8 transition-colors hover:border-accent hover:bg-bg-soft"
+                >
+                  <p className="label text-faint">Education</p>
+                  <h3 className="mt-2 font-display text-2xl font-bold tracking-tight">
+                    {d.label}
                   </h3>
-                  <ul className="mt-6 space-y-3.5">
-                    {card.points.map((point) => (
+                  <p className="mt-1 text-sm text-muted">{d.sub}</p>
+                  <p className="mt-4 text-sm leading-relaxed text-muted">
+                    {d.desc}
+                  </p>
+                  <ul className="mt-6 space-y-3 border-t border-line pt-5">
+                    {m.tracks.map((t) => (
                       <li
-                        key={point}
-                        className="flex gap-3 text-sm leading-relaxed text-muted"
+                        key={t.title}
+                        className="flex items-baseline gap-3 text-sm"
                       >
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-accent" />
-                        {point}
+                        <span className="font-display text-xs font-semibold text-accent">
+                          {t.num}
+                        </span>
+                        <span className="flex-1 text-ink">
+                          {t.title}
+                          <span className="ml-2 text-muted">{t.kr}</span>
+                        </span>
+                        <span className="shrink-0 text-right text-xs text-faint">
+                          {t.meta}
+                        </span>
                       </li>
                     ))}
                   </ul>
-                </div>
+                  <span className="mt-7 inline-block text-sm font-medium text-accent transition-transform group-hover:translate-x-1">
+                    {m.catCta} →
+                  </span>
+                </Link>
               </Reveal>
             ))}
           </div>

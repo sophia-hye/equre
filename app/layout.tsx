@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { site } from "@/lib/site";
 import { Header } from "@/components/layout/Header";
+import { SectionNav } from "@/components/layout/SectionNav";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingContact } from "@/components/FloatingContact";
 import { LocaleProvider } from "@/components/i18n/LocaleProvider";
@@ -48,6 +49,7 @@ export default async function RootLayout({
       <body className="min-h-screen antialiased">
         <LocaleProvider initialLocale={locale}>
           <Header />
+          <SectionNav />
           <main>{children}</main>
           <Footer />
           <FloatingContact />

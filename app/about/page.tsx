@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { StudioIntro } from "@/components/about/StudioIntro";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionTitle } from "@/components/ui/SectionTitle";
@@ -25,6 +26,8 @@ export default async function AboutPage() {
 
   return (
     <>
+      <StudioIntro m={msgs.studio} />
+
       <PageHero
         kicker="About eqüre"
         index="A"
