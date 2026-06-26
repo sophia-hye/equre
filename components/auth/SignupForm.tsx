@@ -120,6 +120,7 @@ export function SignupForm() {
     if (!form.terms) return setError(t.errTerms);
 
     setLoading(true);
+    try {
     const supabase = createClient();
     const { data, error: err } = await supabase.auth.signUp({
       email: form.email.trim(),
@@ -142,10 +143,16 @@ export function SignupForm() {
         },
       },
     });
-    setLoading(false);
-
-    if (err) return setError(err.message);
-    setDone(data.session ? "active" : "confirm");
+      if (err) {
+        setError(err.message);
+        return;
+      }
+      setDone(data.session ? "active" : "confirm");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "가입 중 오류가 발생했습니다.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   if (done === "active") {

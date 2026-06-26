@@ -32,19 +32,23 @@ export function LoginForm() {
     if (!password) return setError(t.errPassword);
 
     setLoading(true);
-    const supabase = createClient();
-    const { error: err } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    setLoading(false);
-
-    if (err) {
+    try {
+      const supabase = createClient();
+      const { error: err } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (err) {
+        setError(t.errFail);
+        return;
+      }
+      router.push("/");
+      router.refresh();
+    } catch {
       setError(t.errFail);
-      return;
+    } finally {
+      setLoading(false);
     }
-    router.push("/");
-    router.refresh();
   }
 
   return (
