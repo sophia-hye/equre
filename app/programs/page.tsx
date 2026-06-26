@@ -17,7 +17,6 @@ export const metadata: Metadata = {
 
 export default async function ProgramsPage() {
   const m = (await getMessages()).programsPage;
-  const trackNames = m.tracks.map((t) => t.title);
   const disciplines = [
     { label: "Tennis", sub: m.tennisSub, desc: m.tennisDesc, href: "/programs/tennis" },
     { label: "Art", sub: m.artSub, desc: m.artDesc, href: "/programs/art" },
@@ -63,16 +62,22 @@ export default async function ProgramsPage() {
                   <p className="mt-4 text-sm leading-relaxed text-muted">
                     {d.desc}
                   </p>
-                  <ul className="mt-6 space-y-2.5 border-t border-line pt-5">
-                    {trackNames.map((t, n) => (
+                  <ul className="mt-6 space-y-3 border-t border-line pt-5">
+                    {m.tracks.map((t) => (
                       <li
-                        key={t}
-                        className="flex items-center gap-3 text-sm text-ink"
+                        key={t.title}
+                        className="flex items-baseline gap-3 text-sm"
                       >
                         <span className="font-display text-xs font-semibold text-accent">
-                          {String(n + 1).padStart(2, "0")}
+                          {t.num}
                         </span>
-                        {t}
+                        <span className="flex-1 text-ink">
+                          {t.title}
+                          <span className="ml-2 text-muted">{t.kr}</span>
+                        </span>
+                        <span className="shrink-0 text-right text-xs text-faint">
+                          {t.meta}
+                        </span>
                       </li>
                     ))}
                   </ul>

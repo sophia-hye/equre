@@ -5,7 +5,9 @@ import { Reveal } from "@/components/ui/Reveal";
 type Track = {
   num: string;
   title: string;
+  kr: string;
   sub: string;
+  meta: string;
   desc: string;
   points: readonly string[];
 };
@@ -47,7 +49,12 @@ export function TracksSection({
                     <h3 className="font-display text-2xl font-bold tracking-tight">
                       {t.title}
                     </h3>
-                    <span className="text-sm text-muted">{t.sub}</span>
+                    <span className="text-sm text-muted">
+                      {t.kr} · {t.sub}
+                    </span>
+                    <span className="text-xs font-medium uppercase tracking-wide text-accent">
+                      {t.meta}
+                    </span>
                   </div>
                   <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
                     {t.desc}

@@ -9,13 +9,13 @@ export function EducationCategories({
   desc,
   ctaLabel,
   cats,
-  trackNames,
+  tracks,
 }: {
   title: string;
   desc: string;
   ctaLabel: string;
   cats: Cat[];
-  trackNames: readonly string[];
+  tracks: readonly { num: string; title: string; kr: string; meta: string }[];
 }) {
   return (
     <section className="plans" id="disciplines">
@@ -32,12 +32,16 @@ export function EducationCategories({
               <div className="kr">{c.sub}</div>
               <p className="blurb">{c.desc}</p>
               <ul className="feat">
-                {trackNames.map((t, i) => (
-                  <li key={t}>
+                {tracks.map((t) => (
+                  <li key={t.title}>
                     <span className="ck" aria-hidden="true">
-                      {String(i + 1).padStart(2, "0")}
+                      {t.num}
                     </span>
-                    <span className="cn">{t}</span>
+                    <span className="cn">
+                      {t.title}
+                      <span style={{ color: "var(--muted)" }}> {t.kr}</span>
+                    </span>
+                    <span className="ch">{t.meta}</span>
                   </li>
                 ))}
               </ul>

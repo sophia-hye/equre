@@ -20,8 +20,6 @@ export default async function Page() {
     { label: "Tennis", sub: p.tennisSub, desc: p.tennisDesc, href: "/programs/tennis" },
     { label: "Art", sub: p.artSub, desc: p.artDesc, href: "/programs/art" },
   ];
-  const trackNames = p.tracks.map((t) => t.title);
-
   return (
     <>
       <div className="studio-home" id="top">
@@ -44,7 +42,7 @@ export default async function Page() {
           desc={p.catDesc}
           ctaLabel={p.catCta}
           cats={cats}
-          trackNames={trackNames}
+          tracks={p.tracks}
         />
 
         <StudioCta m={m} />
