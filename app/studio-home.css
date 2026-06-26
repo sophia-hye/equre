@@ -3,15 +3,16 @@
    Pretendard) are already loaded globally in app/layout.tsx. */
 
 .studio-home {
-  --paper: #e9e5d9;
-  --paper-2: #e2ddce;
-  --ink: #3c3c33;
-  --ink-soft: #5a5a4e;
-  --muted: #8c8a7c;
-  --rule: #cfcaba;
-  --terra: #c05a3b;
-  --terra-deep: #a64a30;
-  --dark: #26251f;
+  /* 전역 @theme 토큰에 정렬 — 색은 globals.css 한 곳에서 관리 */
+  --paper: var(--color-bg);
+  --paper-2: var(--color-bg-soft);
+  --ink: var(--color-ink);
+  --ink-soft: var(--color-muted);
+  --muted: var(--color-faint);
+  --rule: var(--color-line);
+  --terra: var(--color-accent);
+  --terra-deep: var(--color-accent-dim);
+  --dark: var(--color-line-strong);
   --dark-2: #1c1b16;
   --display: "Archivo", "Pretendard", system-ui, sans-serif;
   --body: "Pretendard", "Archivo", system-ui, sans-serif;
