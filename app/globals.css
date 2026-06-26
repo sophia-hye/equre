@@ -71,6 +71,17 @@ body > footer {
   z-index: 2;
 }
 
+/* 스크롤은 유지하되 스크롤바는 숨김 (모바일 sub navbar 가로 스크롤) */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
 /* ── Typography helpers ──────────────────────────────────── */
 .font-display {
   font-family: var(--font-display);

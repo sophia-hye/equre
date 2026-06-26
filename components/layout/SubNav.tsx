@@ -13,7 +13,7 @@ export function SubNav({
 }) {
   return (
     <div className="sticky top-16 z-40 border-b border-line-strong bg-bg/95 backdrop-blur-md">
-      <div className="mx-auto flex h-12 w-full max-w-[1400px] items-center gap-5 overflow-x-auto overflow-y-hidden px-4 sm:gap-8 sm:px-6 lg:px-8 md:overflow-visible">
+      <div className="no-scrollbar mx-auto flex h-12 w-full max-w-[1400px] items-center gap-5 overflow-x-auto overflow-y-hidden px-4 sm:gap-8 sm:px-6 lg:px-8 md:overflow-visible">
         <DivisionSwitcher current={current} />
         <span className="h-4 w-px shrink-0 bg-line-strong" aria-hidden />
         <nav className="flex items-center gap-5">
