@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { SubNav } from "@/components/layout/SubNav";
 import { DivisionDetail } from "@/components/divisions/DivisionDetail";
-import { businessSubNav } from "@/lib/site";
 import { getMessages } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
@@ -14,7 +12,6 @@ export default async function Page() {
   const m = (await getMessages()).studio;
   return (
     <>
-      <SubNav title={m.p2h3} items={businessSubNav} />
       <DivisionDetail
         m={m}
         pn={m.p2pn}

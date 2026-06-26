@@ -50,18 +50,25 @@ export const primaryNav: NavItem[] = [
   { label: "Contact", href: "/contact" },
 ];
 
+/** Board(소식) 하위 항목 — sub navbar 드롭다운과 /board 랜딩 카드에서 공용 사용. */
+export const boardItems: NavChild[] = [
+  { label: "Gallery", href: "/news/media", desc: "Media & gallery" },
+  { label: "News", href: "/news/press", desc: "Press releases" },
+  { label: "Events", href: "/news/events", desc: "Events & happenings" },
+];
+
 /** Education Mentoring 사업부 페이지 상단 sub navbar. */
 export const educationSubNav: NavItem[] = [
-  { label: "Program", href: "/programs" },
-  { label: "Space", href: "/space" },
   {
-    label: "Board",
+    label: "Program",
+    href: "/programs",
     children: [
-      { label: "Gallery", href: "/news/media" },
-      { label: "News", href: "/news/press" },
-      { label: "Events", href: "/news/events" },
+      { label: "Tennis", href: "/programs/tennis" },
+      { label: "Art", href: "/programs/art" },
     ],
   },
+  { label: "Space", href: "/space" },
+  { label: "Board", href: "/board", children: boardItems },
   { label: "Membership", href: "/private-membership" },
   {
     label: "Profile",
@@ -71,6 +78,14 @@ export const educationSubNav: NavItem[] = [
 
 /** Business Consulting 사업부 sub navbar (메뉴 미확정 — 우선 Program 하나만 노출). */
 export const businessSubNav: NavItem[] = [{ label: "Program", href: "/programs" }];
+
+/** 사업부 목록 — sub navbar 셀렉트박스로 페이지 전환에 사용. */
+export const divisions = [
+  { key: "education", label: "Education Mentoring", href: "/divisions/education" },
+  { key: "business", label: "Business Consulting", href: "/divisions/business" },
+] as const;
+
+export type DivisionKey = (typeof divisions)[number]["key"];
 
 /** [ARCHIVED] 전체 메뉴 — 현재 헤더에 노출하지 않음. 추후 복원용으로 보관. */
 export const nav: NavItem[] = [
