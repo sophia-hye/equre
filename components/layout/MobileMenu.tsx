@@ -41,7 +41,7 @@ export function MobileMenu() {
         .from("equre_profiles")
         .select("name, role")
         .eq("id", user.id)
-        .single();
+        .maybeSingle();
       setAuth({
         status: "user",
         name: profile?.name || user.email || "회원",

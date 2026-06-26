@@ -34,7 +34,7 @@ export function AuthNav() {
         .from("equre_profiles")
         .select("name, role")
         .eq("id", user.id)
-        .single();
+        .maybeSingle();
       setState({
         status: "user",
         name: profile?.name || user.email || "회원",

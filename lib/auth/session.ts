@@ -45,8 +45,27 @@ export async function getSessionUser(): Promise<SessionUser | null> {
       .from("equre_profiles")
       .select("*")
       .eq("id", user.id)
-      .single();
+      .maybeSingle();
     profile = (data as Profile) ?? null;
+
+    // 다른 출처(예: GCM)로 가입해 equre_profiles 행이 없는 사용자 → 첫 equre 로그인 시
+    // 최소 프로필을 자동 생성(lazy backfill). role/source/created_at 등은 컬럼 기본값.
+    if (!profile) {
+      const meta = (user.user_metadata ?? {}) as Record<string, unknown>;
+      const { data: created } = await admin
+        .from("equre_profiles")
+        .upsert(
+          {
+            id: user.id,
+            email: user.email ?? null,
+            name: typeof meta.name === "string" ? meta.name : null,
+          },
+          { onConflict: "id" }
+        )
+        .select("*")
+        .maybeSingle();
+      profile = (created as Profile) ?? null;
+    }
   } catch {
     profile = null;
   }
