@@ -2,14 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
+import { CTASection } from "@/components/ui/CTASection";
 import { boardItems } from "@/lib/site";
+import { getMessages } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
   title: "Board",
   description: "Gallery, News, Events — eqüre 소식을 한곳에서.",
 };
 
-export default function BoardPage() {
+export default async function BoardPage() {
+  const msgs = await getMessages();
   return (
     <>
       <PageHero
@@ -40,6 +43,13 @@ export default function BoardPage() {
           </div>
         </Container>
       </section>
+
+      <CTASection
+        title="멤버가 되어 더 많은 이야기를 만나보세요"
+        description="eqüre 멤버는 갤러리·뉴스·이벤트와 커뮤니티에 가장 먼저 닿습니다."
+        buttonLabel={msgs.common.signup}
+        buttonHref="/signup"
+      />
     </>
   );
 }
