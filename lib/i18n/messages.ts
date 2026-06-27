@@ -157,8 +157,8 @@ export const messages = {
       ],
       p2pn: "Expertise 02",
       p2h3: "Business Consulting",
-      p2kr: "자본 · 시장진입 · 전략 · 브랜드 · 디지털",
-      p2blurb: "기업을 위해. 같은 멘토십을 회사에 적용합니다 — <em>성장 단계</em>에 맞춰, 첫 자본부터 지속가능한 시장 입지까지.",
+      p2kr: "자금 · 시장 진입 · 사업 성장",
+      p2blurb: "자금 준비, 시장 진입, 사업 개발에 대한 실질적인 지원으로 기업이 성장의 단단한 기반을 다지도록 돕습니다.",
       p2rows: [
         { cn: "Funding & Investor Relations", ch: "IR · Grant", t: false },
         { cn: "Market Entry & Network", ch: "북미 진출 · Forums · B2B", t: false },
@@ -663,8 +663,8 @@ export const messages = {
       ],
       p2pn: "Expertise 02",
       p2h3: "Business Consulting",
-      p2kr: "Capital · Market Entry · Strategy · Brand · Digital",
-      p2blurb: "For ventures. The same mentorship, applied to companies — structured by <em>growth stage</em>, from first capital to lasting market presence.",
+      p2kr: "Funding · Market Entry · Business Growth",
+      p2blurb: "We help ventures build strong foundations for growth through practical support in funding preparation, market entry, and business development.",
       p2rows: [
         { cn: "Funding & Investor Relations", ch: "IR · Grant", t: false },
         { cn: "Market Entry & Network", ch: "North America · Forums · B2B", t: false },
