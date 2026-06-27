@@ -146,8 +146,8 @@ export const messages = {
       cardSub: "차세대 멘토링",
       p1pn: "Expertise 01",
       p1h3: "Education Mentoring",
-      p1kr: "입시 · 유학 · 학생 지원",
-      p1blurb: "학생을 위해. 압박을 길로, 실패를 플랜 B로 바꿉니다 — <em>입시 전략</em>과 <em>진짜 심리 케어</em>를 함께. 계획은 그 뒤에 선 사람이 단단할 때 비로소 유지되니까요.",
+      p1kr: "입시 · 유학 · 멘토 코칭",
+      p1blurb: "차세대 리더, 프로 스포츠 특기자, 예술 전공자를 위한 맞춤형 글로벌 진학 매칭을 제공합니다. 미국·상해·이탈리아 등 각 국가별 명문대 정식 입시 전략부터 안전한 현지 정착 가이드, 그리고 학생들이 현지에서 주도하는 브랜드 앰배서더 페스티벌 기획까지 전 과정을 전문적으로 관리합니다.",
       p1rows: [
         { cn: "Admissions", ch: "국내 & 해외", t: false },
         { cn: "Study Abroad Planning", ch: "학교 · 프로그램 · 지원", t: false },
