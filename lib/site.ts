@@ -9,6 +9,12 @@ export const site = {
   location: "SEOULITE HANNAM",
 } as const;
 
+/** 오피스 주소 (Contact 페이지). */
+export const offices = [
+  { label: "HQ · Los Angeles", address: "801 S Olive St, Los Angeles, CA 90014" },
+  { label: "Seoul Office · Daechi", address: "512 Yeoksam-ro, Gangnam-gu, Seoul" },
+] as const;
+
 /** 소셜 / 메신저 채널 설정.
  *  카카오 채널이 생기면 kakaoChannelId 에 "_xxxxx" (pf.kakao.com/_xxxxx 의 뒷부분)만
  *  넣으면 모든 곳(푸터/플로팅/Contact)에 카카오 버튼이 자동으로 나타납니다. */
