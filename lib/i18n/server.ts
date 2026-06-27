@@ -1,18 +1,16 @@
 import "server-only";
-import { messages, type Locale, type Messages } from "./messages";
+import { cookies } from "next/headers";
+import { DEFAULT_LOCALE, messages, type Locale, type Messages } from "./messages";
 
-/**
- * 임시: 한국어 검수 전까지 전체 사이트를 영어로 고정합니다.
- * (원복하려면 쿠키 기반 로직 + `cookies` / `DEFAULT_LOCALE` import 를 복구)
- *
- *   import { cookies } from "next/headers";
- *   import { DEFAULT_LOCALE } from "./messages";
- *   const c = (await cookies()).get("lang")?.value;
- *   if (c === "ko" || c === "en") return c;
- *   return DEFAULT_LOCALE;
- */
+/** 서버에서 현재 로케일을 쿠키로 읽음 (없으면 기본 ko). */
 export async function getLocale(): Promise<Locale> {
-  return "en";
+  try {
+    const c = (await cookies()).get("lang")?.value;
+    if (c === "ko" || c === "en") return c;
+  } catch {
+    /* ignore */
+  }
+  return DEFAULT_LOCALE;
 }
 
 /** 서버 컴포넌트용 메시지 객체. */
