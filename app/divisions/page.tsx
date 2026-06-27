@@ -6,9 +6,9 @@ import { RevealInit } from "@/components/home/RevealInit";
 import { getMessages } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
-  title: "Divisions",
+  title: "Expertise",
   description:
-    "eqüre의 두 사업 부문 — Education Mentoring & Business Consulting.",
+    "eqüre의 두 전문 분야 — Education Mentoring & Business Consulting.",
 };
 
 export default async function DivisionsPage() {

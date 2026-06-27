@@ -45,7 +45,7 @@ export type NavItem = { label: string; href?: string; children?: NavChild[] };
 /** 헤더에 노출되는 기본 네비게이션 (4개). */
 export const primaryNav: NavItem[] = [
   { label: "About", href: "/about" },
-  { label: "Divisions", href: "/divisions" },
+  { label: "Expertise", href: "/divisions" },
   { label: "Consultation", href: "/#contact" },
   { label: "Contact", href: "/contact" },
 ];
