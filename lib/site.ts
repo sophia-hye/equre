@@ -1,6 +1,6 @@
 export const site = {
   name: "eqüre",
-  legalName: "eqüre",
+  legalName: "EQÜRE",
   legalNameFull: "eqüre",
   tagline: "The Next Generation Wellness Education",
   description:
