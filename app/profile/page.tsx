@@ -3,20 +3,22 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 import { profileItems } from "@/lib/site";
+import { getMessages } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
   title: "Profile",
   description: "eqüre 소개 — 팀과 멘토진.",
 };
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
+  const m = (await getMessages()).pages;
   return (
     <>
       <PageHero
         kicker="Profile"
         index="E"
-        title="Profile"
-        description="eqüre를 이끄는 팀과 멘토진을 소개합니다."
+        title={m.profileTitle}
+        description={m.profileDesc}
       />
 
       <section className="py-20 md:py-24">
@@ -29,9 +31,11 @@ export default function ProfilePage() {
                 className="group flex flex-col border border-line-strong p-8 transition-colors hover:border-accent hover:bg-bg-soft"
               >
                 <h3 className="font-display text-xl font-bold tracking-tight">
-                  {item.label}
+                  {item.href === "/team" ? m.teamLabel : item.label}
                 </h3>
-                <p className="mt-2 text-sm text-muted">{item.desc}</p>
+                <p className="mt-2 text-sm text-muted">
+                  {item.href === "/team" ? m.teamDesc : item.desc}
+                </p>
                 <span className="mt-8 inline-block text-lg text-accent transition-transform group-hover:translate-x-1">
                   →
                 </span>

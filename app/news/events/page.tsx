@@ -2,26 +2,28 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 import { getBoardPosts } from "@/lib/board";
+import { getMessages } from "@/lib/i18n/server";
 
 export const metadata: Metadata = { title: "Events" };
 export const dynamic = "force-dynamic";
 
 export default async function EventsPage() {
   const posts = await getBoardPosts("event");
+  const m = (await getMessages()).pages;
 
   return (
     <>
       <PageHero
         kicker="Board · Events"
         index="C"
-        title="Events"
-        description="eqüre 커뮤니티 행사와 이벤트."
+        title={m.newsEventsTitle}
+        description={m.newsEventsDesc}
       />
 
       <section className="py-16 md:py-20">
         <Container>
           {posts.length === 0 ? (
-            <p className="text-muted">아직 등록된 이벤트가 없습니다.</p>
+            <p className="text-muted">{m.newsEventsEmpty}</p>
           ) : (
             <div className="border-t border-line-strong">
               {posts.map((post) => (

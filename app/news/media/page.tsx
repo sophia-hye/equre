@@ -2,26 +2,28 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 import { getBoardPosts } from "@/lib/board";
+import { getMessages } from "@/lib/i18n/server";
 
 export const metadata: Metadata = { title: "Gallery" };
 export const dynamic = "force-dynamic";
 
 export default async function GalleryPage() {
   const posts = await getBoardPosts("gallery");
+  const m = (await getMessages()).pages;
 
   return (
     <>
       <PageHero
         kicker="Board · Gallery"
         index="C"
-        title="Gallery"
-        description="eqüre 커뮤니티와 공간의 순간들."
+        title={m.newsGalleryTitle}
+        description={m.newsGalleryDesc}
       />
 
       <section className="py-16 md:py-20">
         <Container>
           {posts.length === 0 ? (
-            <p className="text-muted">아직 등록된 갤러리가 없습니다.</p>
+            <p className="text-muted">{m.newsGalleryEmpty}</p>
           ) : (
             <div className="space-y-16">
               {posts.map((post) => (
