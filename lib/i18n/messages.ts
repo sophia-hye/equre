@@ -162,7 +162,7 @@ export const messages = {
       p2rows: [
         { cn: "Funding Readiness", ch: "IR · 보조금 · 피치 준비", t: false },
         { cn: "Market Entry", ch: "미국 & 캐나다 · 파트너십 · B2B", t: false },
-        { cn: "Brand Positioning", ch: "아이덴티티 · 메시징 · 비주얼 방향", t: true },
+        { cn: "Brand Positioning", ch: "아이덴티티 · 비주얼 방향", t: true },
         { cn: "Digital Presence", ch: "웹사이트 · 콘텐츠 · 검색 노출", t: false },
       ],
       hold: "전체 서비스는 디스커버리 콜에서 안내드립니다",
@@ -667,7 +667,7 @@ export const messages = {
       p2rows: [
         { cn: "Funding Readiness", ch: "IR · Grants · Pitch Preparation", t: false },
         { cn: "Market Entry", ch: "U.S. & Canada · Partnerships · B2B", t: false },
-        { cn: "Brand Positioning", ch: "Identity · Messaging · Visual Direction", t: true },
+        { cn: "Brand Positioning", ch: "Identity · Visual Direction", t: true },
         { cn: "Digital Presence", ch: "Website · Content · Search Visibility", t: false },
       ],
       hold: "Full services are shared during the discovery call",
