@@ -1,6 +1,6 @@
 export const site = {
   name: "eqüre",
-  legalName: "eqüre",
+  legalName: "EQÜRE",
   legalNameFull: "eqüre",
   tagline: "The Next Generation Wellness Education",
   description:
@@ -8,6 +8,12 @@ export const site = {
   email: "hello@equre.us",
   location: "SEOULITE HANNAM",
 } as const;
+
+/** 오피스 주소 (Contact 페이지). */
+export const offices = [
+  { label: "HQ · Los Angeles", address: "801 S Olive St, Los Angeles, CA 90014" },
+  { label: "Seoul Office · Daechi", address: "512 Yeoksam-ro, Gangnam-gu, Seoul" },
+] as const;
 
 /** 소셜 / 메신저 채널 설정.
  *  카카오 채널이 생기면 kakaoChannelId 에 "_xxxxx" (pf.kakao.com/_xxxxx 의 뒷부분)만

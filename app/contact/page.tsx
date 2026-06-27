@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 import { ContactForm } from "@/components/contact/ContactForm";
-import { site, getSocialLinks } from "@/lib/site";
+import { site, offices, getSocialLinks } from "@/lib/site";
 import { IconInstagram, IconKakao } from "@/components/ui/icons";
 import { getMessages } from "@/lib/i18n/server";
 
@@ -34,7 +34,7 @@ export default async function ContactPage() {
               <dl className="mt-10 border-t border-line-strong">
                 {[
                   { k: "Email", v: site.email },
-                  { k: "Location", v: site.location },
+                  ...offices.map((o) => ({ k: o.label, v: o.address })),
                   { k: "Company", v: site.legalName },
                 ].map((row) => (
                   <div key={row.k} className="border-b border-line py-5">
