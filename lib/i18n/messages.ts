@@ -19,6 +19,12 @@ export const messages = {
       signedIn: "님 · 로그인됨",
       adminBadge: "관리자",
     },
+    nav: {
+      about: "기관 소개",
+      expertise: "전문 분야",
+      scholarship: "장학 제도",
+      contact: "컨설팅 문의",
+    },
     footer: {
       tagline: "The Next Generation Wellness Education",
       colCompany: "Company",
@@ -188,6 +194,7 @@ export const messages = {
       governanceManagement: "경영진",
       resources: "리소스",
       team: "팀",
+      scholarship: "장학 제도",
       profileTitle: "프로필",
       profileDesc: "eqüre를 이끄는 팀과 멘토진을 소개합니다.",
       teamLabel: "팀",
@@ -524,6 +531,12 @@ export const messages = {
       signedIn: " · Signed in",
       adminBadge: "Admin",
     },
+    nav: {
+      about: "About",
+      expertise: "Expertise",
+      scholarship: "Scholarship",
+      contact: "Contact",
+    },
     footer: {
       tagline: "Next-Generation Wellness Education",
       colCompany: "Company",
@@ -693,6 +706,7 @@ export const messages = {
       governanceManagement: "Management",
       resources: "Resources",
       team: "Team",
+      scholarship: "Scholarship",
       profileTitle: "Profile",
       profileDesc: "Meet the team and mentors behind eqüre.",
       teamLabel: "Team",
