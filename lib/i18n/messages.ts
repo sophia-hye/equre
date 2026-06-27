@@ -162,7 +162,6 @@ export const messages = {
       p2rows: [
         { cn: "Funding Readiness", ch: "IR · 보조금 · 피치 준비", t: false },
         { cn: "Market Entry", ch: "미국 & 캐나다 · 파트너십 · B2B", t: false },
-        { cn: "Strategy & Operations", ch: "사업 기획 · 운영 · 시장 전략", t: false },
         { cn: "Brand Positioning", ch: "아이덴티티 · 메시징 · 비주얼 방향", t: true },
         { cn: "Digital Presence", ch: "웹사이트 · 콘텐츠 · 검색 노출", t: false },
       ],
@@ -668,7 +667,6 @@ export const messages = {
       p2rows: [
         { cn: "Funding Readiness", ch: "IR · Grants · Pitch Preparation", t: false },
         { cn: "Market Entry", ch: "U.S. & Canada · Partnerships · B2B", t: false },
-        { cn: "Strategy & Operations", ch: "Business Planning · Operations · Market Strategy", t: false },
         { cn: "Brand Positioning", ch: "Identity · Messaging · Visual Direction", t: true },
         { cn: "Digital Presence", ch: "Website · Content · Search Visibility", t: false },
       ],
