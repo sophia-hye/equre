@@ -25,7 +25,7 @@ export function StudioHome({ m }: { m: Studio }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/home-poster.png"
-            alt="eqüre — The Way Maker. Pave the Way, Light the Life."
+            alt="eqüre — The Way Maker. Pave the Way. Expand the Border."
             width={3240}
             height={3240}
           />
