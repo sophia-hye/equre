@@ -3,11 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import { primaryNav } from "@/lib/site";
+import { useMessages } from "@/components/i18n/LocaleProvider";
 
 /** 모바일 전용 메인 네비 (햄버거). 데스크탑(md+)에서는 Header의 인라인 메뉴가 노출되고
  *  이 컴포넌트는 숨겨진다. */
 export function PrimaryMobileNav() {
   const [open, setOpen] = useState(false);
+  const nav = useMessages().nav;
 
   return (
     <div className="md:hidden">
@@ -31,7 +33,7 @@ export function PrimaryMobileNav() {
                 onClick={() => setOpen(false)}
                 className="border-b border-line py-3.5 text-sm font-medium uppercase tracking-wide text-ink transition-colors last:border-0 hover:text-accent"
               >
-                {item.label}
+                {nav[item.key as keyof typeof nav] ?? item.label}
               </Link>
             ))}
           </nav>

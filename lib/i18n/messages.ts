@@ -19,6 +19,12 @@ export const messages = {
       signedIn: "님 · 로그인됨",
       adminBadge: "관리자",
     },
+    nav: {
+      about: "기관 소개",
+      expertise: "전문 분야",
+      scholarship: "장학 제도",
+      contact: "컨설팅 문의",
+    },
     footer: {
       tagline: "The Next Generation Wellness Education",
       colCompany: "Company",
@@ -173,7 +179,7 @@ export const messages = {
       p1cta: "Education Mentoring 둘러보기",
       p2cta: "Business Consulting 둘러보기",
       plansTitle: "전문 분야",
-      plansLede: "학생에게는 길잡이를, 성장하는 기업에게는 실질적인 지원을.",
+      plansLede: "학생에게는 멘토십을, 성장하는 기업에게는 컨설팅을.",
       plansDesc: "이큐어(Eqüre)는 개인의 성공적인 해외 정착을 위한 교육 컨설팅과, 기업의 글로벌 시장 진출을 위한 크로스보더 자문을 제공합니다. 각 분야의 정교한 현지 인프라와 실무 전략을 바탕으로 가장 확실한 글로벌 진출 솔루션을 제시합니다. 두 가지 핵심 역량을 통해 글로벌 시장에서의 성장을 함께 합니다.",
     },
     comingSoon: {
@@ -188,6 +194,7 @@ export const messages = {
       governanceManagement: "경영진",
       resources: "리소스",
       team: "팀",
+      scholarship: "장학 제도",
       profileTitle: "프로필",
       profileDesc: "eqüre를 이끄는 팀과 멘토진을 소개합니다.",
       teamLabel: "팀",
@@ -524,6 +531,12 @@ export const messages = {
       signedIn: " · Signed in",
       adminBadge: "Admin",
     },
+    nav: {
+      about: "About",
+      expertise: "Expertise",
+      scholarship: "Scholarship",
+      contact: "Contact",
+    },
     footer: {
       tagline: "Next-Generation Wellness Education",
       colCompany: "Company",
@@ -678,7 +691,7 @@ export const messages = {
       p1cta: "Explore Education Mentoring",
       p2cta: "Explore Business Consulting",
       plansTitle: "Expertise",
-      plansLede: "Guidance for students. Practical support for growing ventures.",
+      plansLede: "Mentorship for students. Consulting for growing ventures.",
       plansDesc: "Eqüre brings together two areas of expertise: education mentoring for students and consulting support for ventures. Across both, our approach is grounded in thoughtful planning, practical strategy, and steady guidance at important turning points.",
     },
     comingSoon: {
@@ -693,6 +706,7 @@ export const messages = {
       governanceManagement: "Management",
       resources: "Resources",
       team: "Team",
+      scholarship: "Scholarship",
       profileTitle: "Profile",
       profileDesc: "Meet the team and mentors behind eqüre.",
       teamLabel: "Team",

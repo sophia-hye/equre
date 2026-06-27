@@ -46,14 +46,14 @@ export function getSocialLinks(): SocialLink[] {
 }
 
 export type NavChild = { label: string; href: string; desc?: string };
-export type NavItem = { label: string; href?: string; children?: NavChild[] };
+export type NavItem = { key?: string; label: string; href?: string; children?: NavChild[] };
 
 /** 헤더에 노출되는 기본 네비게이션 (4개). */
 export const primaryNav: NavItem[] = [
-  { label: "About", href: "/about" },
-  { label: "Expertise", href: "/divisions" },
-  { label: "Consultation", href: "/#contact" },
-  { label: "Contact", href: "/contact" },
+  { key: "about", label: "About", href: "/about" },
+  { key: "expertise", label: "Expertise", href: "/divisions" },
+  { key: "scholarship", label: "Scholarship", href: "/scholarship" },
+  { key: "contact", label: "Contact", href: "/contact" },
 ];
 
 /** Board(소식) 하위 항목 — sub navbar 드롭다운과 /board 랜딩 카드에서 공용 사용. */
