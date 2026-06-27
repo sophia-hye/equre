@@ -41,7 +41,7 @@ export default async function SpacePage() {
         description={m.heroDesc}
       />
 
-      {/* duotone banner */}
+      {/* banner — SEOULITE HANNAM 사진 (그라데이션은 폴백) */}
       <section className="border-b border-line-strong">
         <div
           className="relative aspect-[16/7] w-full overflow-hidden"
@@ -50,12 +50,14 @@ export default async function SpacePage() {
               "linear-gradient(135deg, #e7d2bf 0%, #d68a64 45%, #c2492b 100%)",
           }}
         >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/main-clay.png"
+            alt={`${site.location} — ${m.banner}`}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
           <div
-            className="pointer-events-none absolute inset-0 opacity-30 mix-blend-overlay"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(90deg, rgba(255,255,255,.6) 0 1px, transparent 1px 64px)",
-            }}
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent"
             aria-hidden
           />
           <Container className="relative flex h-full items-end py-8">
