@@ -284,8 +284,8 @@ export const messages = {
       ctaBtn: "방문 / 대관 문의",
     },
     contactPage: {
-      heroTitle: "Are you ready to CURE & GROW?",
-      heroDesc: "학부모·학생 상담부터 B2B 제휴까지, eqüre가 가장 완벽한 파트너십을 함께 만들어가겠습니다.",
+      heroTitle: "Ready to Build Your Safety Net?",
+      heroDesc: "학생과 학부모부터 기관까지, 이큐어(Eqüre)가 가장 완벽한 파트너십을 함께 만들어가겠습니다.",
       guide: "문의 안내",
       guideDesc: "아래 양식을 작성해 주시면 담당자가 빠르게 연락드립니다. 급하신 경우 이메일로도 문의하실 수 있습니다.",
       directTitle: "바로 문의",
@@ -789,8 +789,8 @@ export const messages = {
       ctaBtn: "Visit / Rental inquiry",
     },
     contactPage: {
-      heroTitle: "Are you ready to CURE & GROW?",
-      heroDesc: "From parent/student consultations to B2B partnerships, eqüre will build the most complete partnership with you.",
+      heroTitle: "Ready to Build Your Safety Net?",
+      heroDesc: "From students and parents to organizations, Eqüre will build the most complete partnership with you.",
       guide: "How to reach us",
       guideDesc: "Fill out the form below and our team will get back to you quickly. For urgent matters, you can also reach us by email.",
       directTitle: "Reach us directly",
