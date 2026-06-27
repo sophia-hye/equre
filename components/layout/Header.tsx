@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
-// import { LanguageToggle } from "@/components/ui/LanguageToggle"; // 임시: 한국어 검수 전까지 영어 고정
+import { LanguageToggle } from "@/components/ui/LanguageToggle";
 import { AuthNav } from "./AuthNav";
 import { PrimaryMobileNav } from "./PrimaryMobileNav";
 import { primaryNav } from "@/lib/site";
@@ -25,7 +25,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* <LanguageToggle /> 임시: 한국어 검수 전까지 영어 고정 */}
+          <LanguageToggle />
           <AuthNav />
           <PrimaryMobileNav />
         </div>
