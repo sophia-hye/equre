@@ -37,3 +37,7 @@ next-env.d.ts
 # bkit auto-generated state
 docs/.bkit-memory.json
 docs/.pdca-status.json
+docs/.pdca-snapshots/
+
+# instagram image generation (local assets/scripts, not part of site build)
+instagram-puzzle/
