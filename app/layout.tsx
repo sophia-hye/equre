@@ -9,16 +9,20 @@ import { LocaleProvider } from "@/components/i18n/LocaleProvider";
 import { getLocale } from "@/lib/i18n/server";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.equre.us"),
   title: {
     default: `${site.name} — ${site.tagline}`,
     template: `%s | ${site.name}`,
   },
   description: site.description,
+  alternates: { canonical: "/" },
   openGraph: {
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
     type: "website",
     locale: "ko_KR",
+    url: "https://www.equre.us",
+    siteName: site.name,
   },
 };
 
