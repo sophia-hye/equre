@@ -12,6 +12,7 @@ import {
 /** Education 사업부 섹션에 속하는 경로들 — 이 경로에서는 Education sub navbar가 유지된다. */
 const EDUCATION_PREFIXES = [
   "/divisions/education",
+  "/scholarship",
   "/programs",
   "/space",
   "/board",

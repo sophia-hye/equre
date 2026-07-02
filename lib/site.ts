@@ -52,7 +52,6 @@ export type NavItem = { key?: string; label: string; href?: string; children?: N
 export const primaryNav: NavItem[] = [
   { key: "about", label: "About", href: "/about" },
   { key: "expertise", label: "Expertise", href: "/divisions" },
-  { key: "scholarship", label: "Scholarship", href: "/scholarship" },
   { key: "contact", label: "Contact", href: "/contact" },
 ];
 
@@ -78,6 +77,7 @@ export const educationSubNav: NavItem[] = [
       { label: "Art", href: "/programs/art" },
     ],
   },
+  { label: "Scholarship", href: "/scholarship" },
   { label: "Space", href: "/space" },
   { label: "Board", href: "/board", children: boardItems },
   { label: "Membership", href: "/private-membership" },
