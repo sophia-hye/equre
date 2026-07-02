@@ -85,7 +85,9 @@ export const educationSubNav: NavItem[] = [
 ];
 
 /** Business Consulting 사업부 sub navbar (메뉴 미확정 — 우선 Program 하나만 노출). */
-export const businessSubNav: NavItem[] = [{ label: "Program", href: "/programs" }];
+export const businessSubNav: NavItem[] = [
+  { label: "Program", href: "/divisions/business/program" },
+];
 
 /** 사업부 목록 — sub navbar 셀렉트박스로 페이지 전환에 사용. */
 export const divisions = [
